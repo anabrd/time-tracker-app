@@ -28,8 +28,8 @@ export default function(props) {
             <p>Status: {props.status}</p>
             <p>Total time: {hours}h {minutes}m {seconds}s</p>
             <div className="btn-wrapper">
-                <FontAwesomeIcon className = "btn-ctrl" icon={faPlay} onClick={props.isActive ? null : props.play} data-set={totalSeconds}/>
-                <FontAwesomeIcon className = "btn-ctrl" icon={faStop} onClick={props.isActive ? props.stop : null} data-set={totalSeconds}/>
+                <FontAwesomeIcon className = "btn-ctrl" icon={faPlay} onClick={props.isActive ? null : () => props.play(props.name, totalSeconds)}/>
+                <FontAwesomeIcon className = "btn-ctrl" icon={faStop} onClick={props.isActive ? () => props.stop(props.name, totalSeconds) : null}/>
                 <FontAwesomeIcon className = "btn-ctrl" icon={faTrashAlt} onClick={props.delete}/>
             </div>
         </div>

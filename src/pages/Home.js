@@ -44,6 +44,10 @@ export default function() {
     ]);
 
 
+    let timeUpdater = (newTime) => {
+        setTotalSeconds(newTime);
+    }
+
     // LOG IN
     let toTracker = (event) =>
     {
@@ -65,7 +69,7 @@ export default function() {
     let ProjectGroup = () => {
         console.log(currentUser.projects)
         let projects = currentUser.projects.map(project => 
-            <Project name = {project.projectName}  description = {project.description} start = {project.start} status = {project.status} play = {startTime} stop = {stopTime} totalTime = {project.totalTime} isActive = {project.isActive} />);
+            <Project updater = {timeUpdater} name = {project.projectName}  description = {project.description} start = {project.start} status = {project.status} play = {startTime} stop = {stopTime} totalTime = {project.totalTime} isActive = {project.isActive} />);
         console.log(projects);
         return (<div className="project-wrapper">
             { projects }
@@ -92,30 +96,32 @@ export default function() {
     }
 
     // START TIME
-    let startTime = (event) => {
+    let startTime = (projectName) => {
 
         // Check if another project already active
         let prevActive = currentUser.projects.filter(project => project.isActive);
         prevActive.isActive = false;
 
         // Log clicked project as active
-        let projectName = event.currentTarget.parentElement.parentElement.children[0].innerHTML;
+        /* let projectName = event.currentTarget.parentElement.parentElement.children[0].innerHTML; */
         let currentlyActive = currentUser.projects.filter(project => project.projectName == projectName);
         currentlyActive[0].status = "active";
         currentlyActive[0].isActive = true;
         setCurrentProject(currentlyActive);
-        console.log("current total time", totalSeconds)
+        console.log("current total time", totalSeconds);
     }
 
     // STOP TIME
-    let stopTime = (event) => {
-        let projectName = event.currentTarget.parentElement.parentElement.children[0].innerHTML;
+    let stopTime = (projectName, time) => {
+        /* let projectName = event.currentTarget.parentElement.parentElement.children[0].innerHTML; */
+        console.log(projectName)
         let currentlyActive = currentUser.projects.filter(project => project.projectName == projectName);
         currentlyActive[0].status = "inactive";
         currentlyActive[0].isActive = false;
-        currentlyActive[0].totalTime = event.currentTarget.dataset.set;
+        setTotalSeconds(time);
+        currentlyActive[0].totalTime = time;
         setCurrentProject(currentlyActive);
-        console.log("current total time", currentlyActive[0].totalTime);
+        console.log("current total time", totalSeconds);
         console.log(logData)
     }
 
