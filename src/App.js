@@ -1,5 +1,6 @@
 import Home from './pages/Home'
 import Reports from './pages/Reports'
+import Register from './pages/Register'
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -8,6 +9,7 @@ import {
   Link
 } from "react-router-dom";
 import './App.css'
+import Landing from './pages/Landing';
 
 
 
@@ -26,16 +28,24 @@ function App() {
           </li>
         </ul>
       </nav>
-    </div>
 
+<main>
       <Switch>
           <Route path="/reports">
             <Reports />
           </Route>
+          <Route path="/login">
+            <Reports />
+          </Route>
+          <Route path="/register">
+            <Register />
+          </Route>
           <Route path="/">
-            <Home />
+            <Landing />
           </Route>
         </Switch>
+        </main>
+        </div>
     </Router>
   );
 }

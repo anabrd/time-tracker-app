@@ -3,7 +3,7 @@
 // Setup local storage for current user
 
 import './Home.css'
-import Login from '../components/Login'
+import Landing from './Landing'
 import NewProject from '../components/NewProject'
 import {useState, useEffect} from 'react'
 import Dashboard from '../components/Dashboard'
@@ -122,7 +122,7 @@ export default function() {
             <main>
             {loggedIn ? <Dashboard username = {currentUser.username} content = {currentUser.projects.length > 0 ? <ProjectGroup />: "You have no projects yet."} />
             :
-                <Login preview = "Insert username" action = {toTracker} />
+                <Landing preview = "Insert username" action = {toTracker} />
             }
             </main>
             
