@@ -3,19 +3,19 @@
 // Setup local storage for current user
 
 import './Home.css'
-import Landing from './Landing'
+
 import NewProject from '../components/NewProject'
 import {useState, useEffect} from 'react'
+import {Link} from 'react-router-dom'
 import Dashboard from '../components/Dashboard'
 import Project from '../components/Project'
 
 export default function() {
-    const [currentUser, setCurrentUser] = useState(null);
+   /*  const [currentUser, setCurrentUser] = useState(null); */
     const [showNewProject, setShowNewProject] = useState(false);
     const [currentProject, setCurrentProject] = useState({});
     const [totalSeconds, setTotalSeconds] = useState(0);
     const [loggedIn, setLoggedIn] = useState(false);
-
 
     const [logData, setLogData] = useState([
         {
@@ -48,22 +48,7 @@ export default function() {
         setTotalSeconds(newTime);
     }
 
-    // LOG IN
-    let toTracker = (event) =>
-    {
-        event.preventDefault();
-        let result = logData.filter(user => user.username == event.currentTarget.children[1].value);
-        if (result.length !== 0) {
-            setCurrentUser(result[0]);
-        } else {
-            let newUser = {};
-            newUser.username = event.currentTarget.children[1].value;
-            newUser.projects = [];
-            setLogData([...logData, newUser]);
-            setCurrentUser(newUser);
-        }
-        setLoggedIn(true);
-    }
+    let currentUser = logData[0];
 
     // PROJECTS
     let ProjectGroup = () => {
@@ -91,7 +76,7 @@ export default function() {
         newProject.status = "inactive";
         newProject.totalTime = 0;
         newProject.isActive = false;
-        setCurrentUser({...currentUser, projects: [...currentUser.projects, newProject]});
+        /* setCurrentUser({...currentUser, projects: [...currentUser.projects, newProject]}); */
         setShowNewProject(false);
     }
 
@@ -115,20 +100,25 @@ export default function() {
         setCurrentProject(currentlyActive);
     }
 
-
     return (
             <div id="page">
+            <nav>
+                <ul>
+                    <li>
+                        <Link to="/">Home</Link>
+                    </li>
+                    <li>
+                        <Link to="/reports">Reports</Link>
+                    </li>
+                </ul>
+            </nav>
+
             <h1>Time Tracker</h1>
             <main>
-            {loggedIn ? <Dashboard username = {currentUser.username} content = {currentUser.projects.length > 0 ? <ProjectGroup />: "You have no projects yet."} />
-            :
-                <Landing preview = "Insert username" action = {toTracker} />
-            }
+                <Dashboard username = {currentUser.username} content = {currentUser.projects.length > 0 ? <ProjectGroup />: "You have no projects yet."} />
             </main>
             
-            {showNewProject ? <NewProject submitNewProject = {submitNewProjectHandler}/>
-            :
-            null}
+            {showNewProject ? <NewProject submitNewProject = {submitNewProjectHandler}/> : null}
 
             {loggedIn && (!showNewProject) ? <div><button id="btn-new" className="btn btn-main" onClick={addNewProject}>New Project</button>
             <span>Log out</span></div>

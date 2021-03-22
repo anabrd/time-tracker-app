@@ -1,7 +1,9 @@
 import Home from './pages/Home'
 import Reports from './pages/Reports'
+import Login from './pages/Login'
 import Register from './pages/Register'
 import React from "react";
+import {useState} from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -9,41 +11,30 @@ import {
   Link
 } from "react-router-dom";
 import './App.css'
-import Landing from './pages/Landing';
-
 
 
 function App() {
 
+  const [loggedIn, setLoggedIn] = useState(true);
+
   return (
     <Router>
     <div className="App">
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/reports">Reports</Link>
-          </li>
-        </ul>
-      </nav>
-
-<main>
-      <Switch>
-          <Route path="/reports">
-            <Reports />
-          </Route>
-          <Route path="/login">
-            <Reports />
-          </Route>
-          <Route path="/register">
-            <Register />
-          </Route>
-          <Route path="/">
-            <Landing />
-          </Route>
-        </Switch>
+      <main>
+        <Switch>
+            <Route path="/reports">
+              <Reports />
+            </Route>
+            <Route path="/login">
+              <Reports />
+            </Route>
+            <Route path="/register">
+              <Register />
+            </Route>
+            <Route path="/">
+              {loggedIn ? <Login /> : <Home />}
+            </Route>
+          </Switch>
         </main>
         </div>
     </Router>
