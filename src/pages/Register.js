@@ -1,5 +1,5 @@
-export default function() {
-
+import {useState} from 'react';
+export default function(props) {
     // Register new user using bulent's api
     // Duplicate the same structure in local storage??
 
@@ -8,8 +8,8 @@ export default function() {
 
         let data = {};
 
-        data.email = e.currentTarget.children[1].value;
-        data.pass = e.currentTarget.children[2].value;
+        data.email = e.currentTarget.children[2].value;
+        data.pass = e.currentTarget.children[3].value;
 
         console.log(data)
         let url = "https://auth404.herokuapp.com/api/auth/register";
@@ -27,6 +27,8 @@ export default function() {
             console.log(output);
             if (output.status == "success") {
                 console.log("ok");
+                props.username(e.currentTarget.children[1].value);
+                props.setRegistered(true);
             } else {
                 alert("Uset already exists! Please log in.");
             }
@@ -37,6 +39,7 @@ export default function() {
         <div className="card">
             <form onSubmit = {registerHandler}>
                 <h3>Register</h3>
+                <input type="text" placeholder="Choose your username" />
                 <input type="email" placeholder="Enter Email" />
                 <input type="password" placeholder="Enter Password" />
                 <input type="submit" className="btn btn-main" value="Register"/>

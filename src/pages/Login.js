@@ -2,7 +2,6 @@ import {useState} from 'react'
 import {Link} from 'react-router-dom'
 export default function(props) {
 
-    const [loggedIn, setLoggedIn] = useState(false);
 
     let logInHandler = (e) => {
         e.preventDefault();
@@ -25,7 +24,9 @@ export default function(props) {
         fetch(urlLogin, options).then(result => result.json()
             .then(output => {
                 if (output.status == "success") {
+                    localStorage.setItem("token", output.token);
                     console.log("ok");
+                    props.setLoggedIn(true);
                 } else {
                     console.log("nope");
                 }

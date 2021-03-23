@@ -12,14 +12,29 @@ body {
     background: linear-gradient(to right, #FFFFFF, #bbbbbb);
 }
 
-main {
+
+nav {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-items: center;
+    justify-content: space-between;
+}
+
+main {
+    height: 100vmin;
+}
+
+h1 {
+    padding-left: 30px;
+}
+
+h2 {
+    margin: 3% auto;
 }
 
 .card {
-    background-color: #b2b4b6;
+    display: block;
+    margin: auto;
     width: 70vmin;
     padding: 1% 1.2%;
     border-radius: 5px;
@@ -29,7 +44,8 @@ main {
 }
 
 input[type=email],
-input[type=password] {
+input[type=password],
+input[type=text] {
     padding: 1.5% 2%;
     margin: 1%;
     width: 70%;
@@ -42,7 +58,8 @@ input[type=password] {
 }
 
 input[type=email]:focus,
-input[type=password]:focus {
+input[type=password]:focus,
+input[type=text]:focus {
     border: 2px solid #FFC839;
     border-radius: 7px;
 }
@@ -52,6 +69,7 @@ input[type=password]:focus {
     padding: 4%;
     justify-content: space-evenly;
     flex-wrap: wrap;
+    flex-flow: row wrap;
 }
 
 .btn {
@@ -73,10 +91,14 @@ input[type=password]:focus {
 
 .btn-main {
     background-color: #FFC839;
+    width: 200px;
 }
 
-.btn-scnd {
-    background-color: #fff;
+.btn-main:hover {
+    background-color: #9C20B0;
+    color: white;
+    transition: 0.2s;
+    border: none;
 }
 
 span {
@@ -86,8 +108,8 @@ span {
 }
 
 .project {
-    background-color: #fcf8f8;
-    width: 30vmin;
+    background-color: #fff;
+    width: 27vmin;
     padding: 2.5%;
     margin: auto 2%;
     border-radius: 5px;
@@ -107,6 +129,8 @@ span {
 
 .btn-ctrl:hover {
     filter: brightness(2.5);
+    color: #9C20B0;
+    transition: 0.2s;
 }
 
 .new-project-card {

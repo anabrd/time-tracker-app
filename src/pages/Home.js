@@ -5,13 +5,11 @@
 import './Home.css'
 
 import NewProject from '../components/NewProject'
-import {useState, useEffect} from 'react'
-import {Link} from 'react-router-dom'
+import {useState} from 'react'
 import Dashboard from '../components/Dashboard'
 import Project from '../components/Project'
 
-export default function() {
-   /*  const [currentUser, setCurrentUser] = useState(null); */
+export default function(props) {
     const [showNewProject, setShowNewProject] = useState(false);
     const [currentProject, setCurrentProject] = useState({});
     const [totalSeconds, setTotalSeconds] = useState(0);
@@ -52,10 +50,8 @@ export default function() {
 
     // PROJECTS
     let ProjectGroup = () => {
-        console.log(currentUser.projects)
         let projects = currentUser.projects.map(project => 
             <Project name = {project.projectName}  description = {project.description} start = {project.start} status = {project.status} play = {startTime} stop = {stopTime} totalTime = {project.totalTime} isActive = {project.isActive} />);
-        console.log(projects);
         return (<div className="project-wrapper">
             { projects }
             </div>);
@@ -101,29 +97,10 @@ export default function() {
     }
 
     return (
-            <div id="page">
-            <nav>
-                <ul>
-                    <li>
-                        <Link to="/">Home</Link>
-                    </li>
-                    <li>
-                        <Link to="/reports">Reports</Link>
-                    </li>
-                </ul>
-            </nav>
-
-            <h1>Time Tracker</h1>
-            <main>
-                <Dashboard username = {currentUser.username} content = {currentUser.projects.length > 0 ? <ProjectGroup />: "You have no projects yet."} />
-            </main>
-            
-            {showNewProject ? <NewProject submitNewProject = {submitNewProjectHandler}/> : null}
-
-            {loggedIn && (!showNewProject) ? <div><button id="btn-new" className="btn btn-main" onClick={addNewProject}>New Project</button>
-            <span>Log out</span></div>
-            :
-            null}
-            </div>
+        <main>
+            <Dashboard username = {props.username} content = {currentUser.projects.length > 0 ? <ProjectGroup />: "You have no projects yet."} />
+            {!showNewProject ? <button id="btn-new" className="btn btn-main" onClick={addNewProject}>New Project</button>
+            :<NewProject submitNewProject = {submitNewProjectHandler}/>}
+        </main>
         )
 }
