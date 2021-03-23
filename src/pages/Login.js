@@ -1,7 +1,5 @@
-import {useState} from 'react'
 import {Link} from 'react-router-dom'
 export default function(props) {
-
 
     let logInHandler = (e) => {
         e.preventDefault();
@@ -28,6 +26,7 @@ export default function(props) {
                     console.log("ok");
                     props.setLoggedIn(true);
                 } else {
+                    localStorage.removeItem("token");
                     console.log("nope");
                 }
             }));

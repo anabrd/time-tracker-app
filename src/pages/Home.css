@@ -3,6 +3,7 @@
 body {
     text-align: center;
     height: 100vh;
+    overflow: hidden;
     font-size: 1.2em;
     color: rgb(30, 43, 43);
     font-family: 'Montserrat',
@@ -18,6 +19,17 @@ nav {
     align-items: center;
     justify-items: center;
     justify-content: space-between;
+}
+
+nav > ul > li {
+    margin: auto 2%;
+    display: flex;
+    align-items: center;
+}
+
+#nav-btn {
+    width: 150px;
+    font-weight: 700;
 }
 
 main {
@@ -108,14 +120,19 @@ span {
 }
 
 .project {
-    background-color: #fff;
     width: 27vmin;
+    min-height: 500px;
     padding: 2.5%;
     margin: auto 2%;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    background: none;
+    border: 0;
+    box-sizing: border-box;
+    box-shadow: inset 0 0 0 2px #9C20B0;
+    position: relative;
 }
 
 .project-wrapper {
@@ -146,7 +163,5 @@ span {
 }
 
 .active-project {
-    border: 2px solid green;
+    border: 2px solid #43943f;
 }
-
-

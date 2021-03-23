@@ -39,10 +39,10 @@ let logout = () => {
     <Router>
       <div className="App">
         <nav>
-            <h1>Time Tracker</h1>
+            <h1>Time Tracker ⏱</h1>
             <ul>
                 <li>
-                  <Link to="/">Home</Link>
+                  {loggedIn ?  <button className="btn btn-main" id = "nav-btn">New Project</button> : null}
                 </li>
                 <li>
                   {loggedIn ?  <Link to="/reports">Reports</Link> : null}
@@ -50,10 +50,12 @@ let logout = () => {
                 <li>
                   {loggedIn ?  <Link to="/" onClick = {logout}>Logout</Link> : null}
                 </li>
+                
             </ul>
         </nav>
         <main>
           <Switch>
+            
               <Route path="/reports">
                 <Reports />
               </Route>
@@ -65,6 +67,7 @@ let logout = () => {
               <Route path="/">
                 {loggedIn ? <Home username = {username} /> :  <Login setLoggedIn = {setLoggedIn} /> }
               </Route>
+
             </Switch>
           </main>
       </div>
