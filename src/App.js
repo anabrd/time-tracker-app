@@ -20,6 +20,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [registered, setRegistered] = useState(false);
   const [username, setUsername] = useState("Ana");
+  const [showNewProject, setShowNewProject] = useState(false);
 
   useEffect(() => {
     if (localStorage.getItem("token") !== null) {
@@ -42,7 +43,7 @@ let logout = () => {
             <h1>Time Tracker ⏱</h1>
             <ul>
                 <li>
-                  {loggedIn ?  <button className="btn btn-main" id = "nav-btn">New Project</button> : null}
+                  {loggedIn ?  <button className="btn btn-main" id = "nav-btn" onClick = {()=> showNewProject ? setShowNewProject(false) : setShowNewProject(true)}>New Project</button> : null}
                 </li>
                 <li>
                   {loggedIn ?  <Link to="/reports">Reports</Link> : null}
@@ -55,7 +56,7 @@ let logout = () => {
         </nav>
         <main>
           <Switch>
-            
+
               <Route path="/reports">
                 <Reports />
               </Route>
@@ -65,7 +66,7 @@ let logout = () => {
               </Route>
 
               <Route path="/">
-                {loggedIn ? <Home username = {username} /> :  <Login setLoggedIn = {setLoggedIn} /> }
+                {loggedIn ? <Home username = {username} showNewProject = {showNewProject} /> :  <Login setLoggedIn = {setLoggedIn} /> }
               </Route>
 
             </Switch>

@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
 body {
+    scroll-behavior: smooth;
     text-align: center;
-    height: 100vh;
-    overflow: hidden;
+    height: 100vmin;
     font-size: 1.2em;
     color: rgb(30, 43, 43);
     font-family: 'Montserrat',
@@ -110,7 +110,7 @@ input[type=text]:focus {
     background-color: #9C20B0;
     color: white;
     transition: 0.2s;
-    border: none;
+    border: 2px solid #9C20B0;
 }
 
 span {

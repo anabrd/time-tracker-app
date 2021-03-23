@@ -99,8 +99,7 @@ export default function(props) {
     return (
         <div>
             <Dashboard username = {props.username} content = {currentUser.projects.length > 0 ? <ProjectGroup />: "You have no projects yet."} />
-            {!showNewProject ? <button id="btn-new" className="btn btn-main" onClick={addNewProject}>New Project</button>
-            :<NewProject submitNewProject = {submitNewProjectHandler}/>}
+            {props.showNewProject ? <NewProject submitNewProject = {submitNewProjectHandler}/> : null}
         </div>
         )
 }
