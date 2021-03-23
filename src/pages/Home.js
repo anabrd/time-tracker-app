@@ -15,52 +15,41 @@ export default function(props) {
     const [totalSeconds, setTotalSeconds] = useState(0);
     const [loggedIn, setLoggedIn] = useState(false);
 
-    const [logData, setLogData] = useState([
-        {
-            username: "Ana",
-            projects: [
-                {
-                    projectName: "HTML",
-                    description: "basic pracitce",
-                    start: "3/9/2021, 12:50:47 AM",
-                    startTime: null,
-                    totalTime: 0,
-                    status: "inactive",
-                    isActive: false
-                },
-                {
-                    projectName: "CSS",
-                    description: "style website",
-                    start: "2/9/2021, 08:50:47 PM",
-                    startTime: null,
-                    totalTime: 0,
-                    status: "inactive",
-                    isActive: false
-                }
-            ]
-        }
-    ]);
+    const [projectsDB, setProjectsDB] = useState(
+        [
+            {
+                projectName: "HTML",
+                description: "basic practice",
+                start: "3/9/2021, 12:50:47 AM",
+                startTime: null,
+                totalTime: 0,
+                status: "inactive",
+                isActive: false
+            },
+            {
+                projectName: "CSS",
+                description: "style website",
+                start: "2/9/2021, 08:50:47 PM",
+                startTime: null,
+                totalTime: 0,
+                status: "inactive",
+                isActive: false
+            }
+        ]);
 
 
     let timeUpdater = (newTime) => {
         setTotalSeconds(newTime);
     }
 
-    let currentUser = logData[0];
 
     // PROJECTS
     let ProjectGroup = () => {
-        let projects = currentUser.projects.map(project => 
+        let projects = projectsDB.map(project => 
             <Project name = {project.projectName}  description = {project.description} start = {project.start} status = {project.status} play = {startTime} stop = {stopTime} totalTime = {project.totalTime} isActive = {project.isActive} />);
         return (<div className="project-wrapper">
             { projects }
             </div>);
-    }
-
-    // ADD NEW PROJECT
-    let addNewProject = () =>
-    {
-        setShowNewProject(true);
     }
 
     let submitNewProjectHandler = (event) => {
@@ -70,17 +59,19 @@ export default function(props) {
         newProject.description = event.currentTarget.children[1].children[1].value;
         newProject.start = new Date().toLocaleString();
         newProject.status = "inactive";
+        newProject.startTime = null;
         newProject.totalTime = 0;
         newProject.isActive = false;
-        /* setCurrentUser({...currentUser, projects: [...currentUser.projects, newProject]}); */
-        setShowNewProject(false);
+        props.setShowNewProject(false);
+        setProjectsDB([...projectsDB, newProject]);
+
     }
 
     // START TIME
     let startTime = (projectName) => {
-        let prevActive = currentUser.projects.filter(project => project.isActive);
+        let prevActive = projectsDB.filter(project => project.isActive);
         prevActive.isActive = false;
-        let currentlyActive = currentUser.projects.filter(project => project.projectName == projectName);
+        let currentlyActive = projectsDB.filter(project => project.projectName == projectName);
         currentlyActive[0].status = "active";
         currentlyActive[0].isActive = true;
         setCurrentProject(currentlyActive);
@@ -88,7 +79,7 @@ export default function(props) {
 
     // STOP TIME
     let stopTime = (projectName, time) => {
-        let currentlyActive = currentUser.projects.filter(project => project.projectName == projectName);
+        let currentlyActive = projectsDB.filter(project => project.projectName == projectName);
         currentlyActive[0].status = "inactive";
         currentlyActive[0].isActive = false;
         setTotalSeconds(time);
@@ -98,7 +89,7 @@ export default function(props) {
 
     return (
         <div>
-            <Dashboard username = {props.username} content = {currentUser.projects.length > 0 ? <ProjectGroup />: "You have no projects yet."} />
+            <Dashboard username = {props.username} content = {projectsDB.length > 0 ? <ProjectGroup />: "You have no projects yet."} />
             {props.showNewProject ? <NewProject submitNewProject = {submitNewProjectHandler}/> : null}
         </div>
         )

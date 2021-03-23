@@ -66,7 +66,7 @@ let logout = () => {
               </Route>
 
               <Route path="/">
-                {loggedIn ? <Home username = {username} showNewProject = {showNewProject} /> :  <Login setLoggedIn = {setLoggedIn} /> }
+                {loggedIn ? <Home username = {username} showNewProject = {showNewProject} setShowNewProject = {setShowNewProject} /> :  <Login setLoggedIn = {setLoggedIn} /> }
               </Route>
 
             </Switch>

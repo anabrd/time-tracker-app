@@ -8,6 +8,7 @@ export default function(props) {
 
         let data = {};
 
+        let username = e.currentTarget.children[1].value;
         data.email = e.currentTarget.children[2].value;
         data.pass = e.currentTarget.children[3].value;
 
@@ -22,12 +23,13 @@ export default function(props) {
             body: JSON.stringify(data)
         }
 
+        console.log(e.currentTarget.children[1].value); 
         // First returns an HTTP response, then a json Response object that needs to be parsed
         fetch(url, options).then(result => result.json().then(output=> {
             console.log(output);
             if (output.status == "success") {
                 console.log("ok");
-                props.username(e.currentTarget.children[1].value);
+                props.username(username);
                 props.setRegistered(true);
             } else {
                 alert("Uset already exists! Please log in.");
