@@ -1,42 +1,31 @@
 // TODO: create check so only one project can be active
-// Routing between login and home
 // Setup local storage for current user
 
 import './Home.css'
 
 import NewProject from '../components/NewProject'
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import Dashboard from '../components/Dashboard'
 import Project from '../components/Project'
 
 export default function(props) {
+
     const [showNewProject, setShowNewProject] = useState(false);
     const [currentProject, setCurrentProject] = useState({});
     const [totalSeconds, setTotalSeconds] = useState(0);
     const [loggedIn, setLoggedIn] = useState(false);
+    const [projectsDB, setProjectsDB] = useState([]);
 
-    const [projectsDB, setProjectsDB] = useState(
-        [
-            {
-                projectName: "HTML",
-                description: "basic practice",
-                start: "3/9/2021, 12:50:47 AM",
-                startTime: null,
-                totalTime: 0,
-                status: "inactive",
-                isActive: false
-            },
-            {
-                projectName: "CSS",
-                description: "style website",
-                start: "2/9/2021, 08:50:47 PM",
-                startTime: null,
-                totalTime: 0,
-                status: "inactive",
-                isActive: false
-            }
-        ]);
+    useEffect(() => {
+    let localProjects = JSON.parse(localStorage.getItem("localProjects"));
+    if (localProjects !== null) {
+        setProjectsDB(localProjects)
+    }
+    }, []);
 
+    useEffect(() => {
+        localStorage.setItem("localProjects", JSON.stringify(projectsDB));
+    }, [projectsDB]);
 
     let timeUpdater = (newTime) => {
         setTotalSeconds(newTime);
@@ -64,7 +53,6 @@ export default function(props) {
         newProject.isActive = false;
         props.setShowNewProject(false);
         setProjectsDB([...projectsDB, newProject]);
-
     }
 
     // START TIME
