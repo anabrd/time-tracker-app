@@ -33,7 +33,9 @@ export default function(props) {
     // PROJECTS
     let ProjectGroup = () => {
         let projects = projectsDB.map(project => 
-            <Project name = {project.projectName}  
+            <Project 
+            projectId = {project.id}  
+            name = {project.projectName}  
             description = {project.description} 
             start = {project.start} 
             status = {project.status} 
@@ -69,17 +71,17 @@ export default function(props) {
     }
 
     // START TIME
-    let startTime = (projectName, time) => {
+    let startTime = (projectId, time) => {
         // Check if an existing project is already active
-        let currentlyActive = projectsDB.filter(project => project.projectName == projectName);
+        let currentlyActive = projectsDB.filter(project => project.id == projectId);
         currentlyActive[0].status = "active";
         currentlyActive[0].isActive = true;
         setCurrentProject(currentlyActive);
     }
 
     // STOP TIME
-    let stopTime = (projectName, time) => {
-        let currentlyActive = projectsDB.filter(project => project.projectName == projectName);
+    let stopTime = (projectId, time) => {
+        let currentlyActive = projectsDB.filter(project => project.id == projectId);
         currentlyActive[0].status = "inactive";
         currentlyActive[0].isActive = false;
         currentlyActive[0].totalTime = time;

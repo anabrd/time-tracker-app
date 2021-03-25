@@ -40,7 +40,7 @@ let logout = () => {
     <Router>
       <div className="App">
         <nav>
-            <h1>Time Tracker ⏱</h1>
+            <h1><Link to="/">Time Tracker ⏱</Link></h1>
             <ul>
                 <li>
                   {loggedIn ?  <button className="btn btn-main" id = "nav-btn" onClick = {()=> showNewProject ? setShowNewProject(false) : setShowNewProject(true)}>New Project</button> : null}
