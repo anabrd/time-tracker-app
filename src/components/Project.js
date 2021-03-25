@@ -26,11 +26,26 @@ export default function(props) {
             <p>Started: {props.start}</p>
             <p>Status: {props.status}</p>
             <p>Total time: {hours}h {minutes}m {seconds}s</p>
-            <div className="btn-wrapper">
-                <FontAwesomeIcon className = "btn-ctrl" icon={faPlay} onClick={props.isActive ? null : () => props.play(props.name, totalSeconds)}/>
-                <FontAwesomeIcon className = "btn-ctrl" icon={faStop} onClick={props.isActive ? () => props.stop(props.name, totalSeconds) : null}/>
-                <FontAwesomeIcon className = "btn-ctrl" icon={faTrashAlt} onClick={props.delete}/>
+
+            
+
+               {props.isActive && props.hasActiveProjects ? 
+                    <div className="btn-wrapper">
+                    <FontAwesomeIcon className = "btn-ctrl" icon={faPlay} onClick={() => props.play(props.name, totalSeconds)}/>
+                    <FontAwesomeIcon className = "btn-ctrl" icon={faStop} onClick={() => props.stop(props.name, totalSeconds)}/>
+                    <FontAwesomeIcon className = "btn-ctrl" icon={faTrashAlt} onClick={props.delete}/>
+                    </div>:
+                    null
+                }
+                {
+                !props.isActive && !props.hasActiveProjects ? 
+                    <div className="btn-wrapper">
+                    <FontAwesomeIcon className = "btn-ctrl" icon={faPlay} onClick={() => props.play(props.name, totalSeconds)}/>
+                    <FontAwesomeIcon className = "btn-ctrl" icon={faStop} onClick={() => props.stop(props.name, totalSeconds)}/>
+                    <FontAwesomeIcon className = "btn-ctrl" icon={faTrashAlt} onClick={props.delete}/>
+                    </div>:
+                    null
+                }
             </div>
-        </div>
     )
 }

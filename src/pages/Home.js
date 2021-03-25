@@ -10,17 +10,14 @@ import Project from '../components/Project'
 
 export default function(props) {
 
-    const [showNewProject, setShowNewProject] = useState(false);
-    const [prevProject, setPrevProject] = useState ({});
     const [currentProject, setCurrentProject] = useState({});
     const [totalSeconds, setTotalSeconds] = useState(0);
-    const [loggedIn, setLoggedIn] = useState(false);
     const [projectsDB, setProjectsDB] = useState([]);
 
     useEffect(() => {
     let localProjects = JSON.parse(localStorage.getItem("localProjects"));
     if (localProjects !== null) {
-        setProjectsDB(localProjects)
+        setProjectsDB(localProjects);
     }
     }, []);
 
@@ -28,15 +25,27 @@ export default function(props) {
         localStorage.setItem("localProjects", JSON.stringify(projectsDB));
     }, [projectsDB]);
 
-    let timeUpdater = (newTime) => {
-        setTotalSeconds(newTime);
-    }
+    let activeProjects = projectsDB.filter(project => project.isActive);
+    let hasActiveProjects;
 
+    if (activeProjects.length == 0) {
+        hasActiveProjects = false;
+    } else {
+        hasActiveProjects = true;
+    }
 
     // PROJECTS
     let ProjectGroup = () => {
         let projects = projectsDB.map(project => 
-            <Project name = {project.projectName}  description = {project.description} start = {project.start} status = {project.status} play = {startTime} stop = {stopTime} totalTime = {project.totalTime} isActive = {project.isActive} />);
+            <Project name = {project.projectName}  
+            description = {project.description} 
+            start = {project.start} 
+            status = {project.status} 
+            play = {startTime}
+            stop = {stopTime}
+            totalTime = {project.totalTime} 
+            isActive = {project.isActive}
+            hasActiveProjects = {hasActiveProjects} />);
         return (<div className="project-wrapper">
             { projects }
             </div>);
@@ -64,22 +73,20 @@ export default function(props) {
     }
 
     // START TIME
-    let startTime = (projectName) => {
+    let startTime = (projectName, time) => {
+        console.log("currentproject outside if", currentProject);
         // Check if an existing project is already active
-        // let prevActive = projectsDB.filter(project => project.isActive);
-        // console.log("prevActive", prevActive)
-        if (Object.keys(currentProject).length !== 0) {
-            let prevActive = projectsDB.filter(project => project.isActive);
-            prevActive[0].isActive = false;
-            prevActive[0].status = "inactive";
-            setCurrentProject(prevActive[0]);
-            /* setProjectsDB(projectsDB.splice(prevActive[0].id, 1, prevActive[0])); */
+        if (Object.keys(currentProject).length !== 0 && currentProject[0].isActive !== undefined) {
+            if (currentProject[0].isActive) {
+            currentProject[0].status = "inactive";
+            currentProject[0].isActive = false;
+            currentProject[0].totalTime = time;
+            projectsDB.splice(currentProject[0].id, 1, currentProject[0]);
+            setProjectsDB(projectsDB);
+            }
         }
 
-        console.log("db after deactivating old proj", projectsDB);
         let currentlyActive = projectsDB.filter(project => project.projectName == projectName);
-
-        console.log(currentlyActive)
         currentlyActive[0].status = "active";
         currentlyActive[0].isActive = true;
         setCurrentProject(currentlyActive);
@@ -90,9 +97,10 @@ export default function(props) {
         let currentlyActive = projectsDB.filter(project => project.projectName == projectName);
         currentlyActive[0].status = "inactive";
         currentlyActive[0].isActive = false;
-        setTotalSeconds(time);
         currentlyActive[0].totalTime = time;
         setCurrentProject(currentlyActive);
+        projectsDB.splice(currentlyActive[0].id, 1, currentlyActive[0]);
+        setProjectsDB(projectsDB);
         console.log(projectsDB);
     }
 
