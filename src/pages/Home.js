@@ -1,6 +1,3 @@
-// TODO: create check so only one project can be active
-// Setup local storage for current user
-
 import './Home.css'
 
 import NewProject from '../components/NewProject'
@@ -11,7 +8,6 @@ import Project from '../components/Project'
 export default function(props) {
 
     const [currentProject, setCurrentProject] = useState({});
-    const [totalSeconds, setTotalSeconds] = useState(0);
     const [projectsDB, setProjectsDB] = useState([]);
 
     useEffect(() => {
@@ -23,7 +19,7 @@ export default function(props) {
 
     useEffect(() => {
         localStorage.setItem("localProjects", JSON.stringify(projectsDB));
-    }, [projectsDB]);
+    });
 
     let activeProjects = projectsDB.filter(project => project.isActive);
     let hasActiveProjects;
@@ -74,18 +70,7 @@ export default function(props) {
 
     // START TIME
     let startTime = (projectName, time) => {
-        console.log("currentproject outside if", currentProject);
         // Check if an existing project is already active
-        if (Object.keys(currentProject).length !== 0 && currentProject[0].isActive !== undefined) {
-            if (currentProject[0].isActive) {
-            currentProject[0].status = "inactive";
-            currentProject[0].isActive = false;
-            currentProject[0].totalTime = time;
-            projectsDB.splice(currentProject[0].id, 1, currentProject[0]);
-            setProjectsDB(projectsDB);
-            }
-        }
-
         let currentlyActive = projectsDB.filter(project => project.projectName == projectName);
         currentlyActive[0].status = "active";
         currentlyActive[0].isActive = true;
@@ -101,7 +86,7 @@ export default function(props) {
         setCurrentProject(currentlyActive);
         projectsDB.splice(currentlyActive[0].id, 1, currentlyActive[0]);
         setProjectsDB(projectsDB);
-        console.log(projectsDB);
+        console.log(projectsDB)
     }
 
     return (
