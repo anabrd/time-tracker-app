@@ -11,6 +11,7 @@ import Project from '../components/Project'
 export default function(props) {
 
     const [showNewProject, setShowNewProject] = useState(false);
+    const [prevProject, setPrevProject] = useState ({});
     const [currentProject, setCurrentProject] = useState({});
     const [totalSeconds, setTotalSeconds] = useState(0);
     const [loggedIn, setLoggedIn] = useState(false);
@@ -44,6 +45,13 @@ export default function(props) {
     let submitNewProjectHandler = (event) => {
         event.preventDefault();
         let newProject = {};
+
+        if (projectsDB.length == 0) {
+            newProject.id = 0;
+        } else {
+            newProject.id = projectsDB[projectsDB.length-1].id + 1;
+        }
+        
         newProject.projectName = event.currentTarget.children[1].children[0].value;
         newProject.description = event.currentTarget.children[1].children[1].value;
         newProject.start = new Date().toLocaleString();
@@ -57,9 +65,21 @@ export default function(props) {
 
     // START TIME
     let startTime = (projectName) => {
-        let prevActive = projectsDB.filter(project => project.isActive);
-        prevActive.isActive = false;
+        // Check if an existing project is already active
+        // let prevActive = projectsDB.filter(project => project.isActive);
+        // console.log("prevActive", prevActive)
+        if (Object.keys(currentProject).length !== 0) {
+            let prevActive = projectsDB.filter(project => project.isActive);
+            prevActive[0].isActive = false;
+            prevActive[0].status = "inactive";
+            setCurrentProject(prevActive[0]);
+            /* setProjectsDB(projectsDB.splice(prevActive[0].id, 1, prevActive[0])); */
+        }
+
+        console.log("db after deactivating old proj", projectsDB);
         let currentlyActive = projectsDB.filter(project => project.projectName == projectName);
+
+        console.log(currentlyActive)
         currentlyActive[0].status = "active";
         currentlyActive[0].isActive = true;
         setCurrentProject(currentlyActive);
@@ -73,6 +93,7 @@ export default function(props) {
         setTotalSeconds(time);
         currentlyActive[0].totalTime = time;
         setCurrentProject(currentlyActive);
+        console.log(projectsDB);
     }
 
     return (
