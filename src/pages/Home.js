@@ -1,5 +1,5 @@
+//TODO : Data get and post, add delete
 import './Home.css'
-
 import NewProject from '../components/NewProject'
 import {useState, useEffect} from 'react'
 import Dashboard from '../components/Dashboard'
@@ -35,12 +35,13 @@ export default function(props) {
         let projects = projectsDB.map(project => 
             <Project 
             projectId = {project.id}  
-            name = {project.projectName}  
+            name = {project.projectName}
             description = {project.description} 
             start = {project.start} 
             status = {project.status} 
             play = {startTime}
             stop = {stopTime}
+            deleteProj = {deleteProj}
             totalTime = {project.totalTime} 
             isActive = {project.isActive}
             hasActiveProjects = {hasActiveProjects} />);
@@ -71,7 +72,7 @@ export default function(props) {
     }
 
     // START TIME
-    let startTime = (projectId, time) => {
+    let startTime = (projectId) => {
         // Check if an existing project is already active
         let currentlyActive = projectsDB.filter(project => project.id == projectId);
         currentlyActive[0].status = "active";
@@ -88,12 +89,22 @@ export default function(props) {
         setCurrentProject(currentlyActive);
         projectsDB.splice(currentlyActive[0].id, 1, currentlyActive[0]);
         setProjectsDB(projectsDB);
-        console.log(projectsDB)
+        console.log(projectsDB);
+    }
+
+    let deleteProj = (projectId) => {
+        let duplicate = [...projectsDB];
+        let currentlyActive = duplicate.filter(project => project.id == projectId);
+        duplicate.splice(currentlyActive[0].id, 1);
+        setProjectsDB([...duplicate]);
+        console.log(projectsDB);
     }
 
     return (
         <div>
-            <Dashboard username = {props.username} content = {projectsDB.length > 0 ? <ProjectGroup />: "You have no projects yet."} />
+            <Dashboard 
+            username = {props.username} 
+            content = {projectsDB.length > 0 ? <ProjectGroup />: "You have no projects yet."} />
             {props.showNewProject ? <NewProject submitNewProject = {submitNewProjectHandler}/> : null}
         </div>
         )

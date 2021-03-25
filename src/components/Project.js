@@ -38,7 +38,7 @@ export default function(props) {
                 <div className="btn-wrapper">
                 <FontAwesomeIcon className = "btn-ctrl" icon={faPlay} onClick={() => props.play(props.projectId, totalSeconds)}/>
                 <FontAwesomeIcon className = "btn-ctrl" icon={faStop} onClick={() => props.stop(props.projectId, totalSeconds)}/>
-                <FontAwesomeIcon className = "btn-ctrl" icon={faTrashAlt} onClick={props.delete}/>
+                <FontAwesomeIcon className = "btn-ctrl" icon={faTrashAlt} onClick={() => props.deleteProj(props.projectId)}/>
                 </div>:
                 null
             }
