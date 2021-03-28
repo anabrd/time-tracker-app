@@ -19,7 +19,7 @@ function App() {
 
   const [loggedIn, setLoggedIn] = useState(false);
   const [registered, setRegistered] = useState(false);
-  const [username, setUsername] = useState("Ana");
+  const [username, setUsername] = useState("");
   const [showNewProject, setShowNewProject] = useState(false);
   const [token, setToken] = useState("");
 

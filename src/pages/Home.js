@@ -9,10 +9,11 @@ export default function(props) {
 
     const [currentProject, setCurrentProject] = useState({});
     const [projectsDB, setProjectsDB] = useState([]);
+    let username = props.username;
     const [token, setToken] = useState(localStorage.getItem('token'));
     let hasActiveProjects;
 
-    useEffect(() => {
+    useEffect(async() => {
         let url = "https://auth404.herokuapp.com/api/my-data";
         let options = {
             method: "GET",
@@ -22,7 +23,7 @@ export default function(props) {
             }
         }
 
-        fetch(url,options).then(res => res.json()).then(output => setProjectsDB(output.data.data));
+        await fetch(url,options).then(res => res.json()).then(output => setProjectsDB(output.data.data)).catch(error => console.log(error));
         console.log(projectsDB)
     }, []);
 
