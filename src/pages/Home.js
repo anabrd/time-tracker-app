@@ -9,46 +9,45 @@ export default function(props) {
 
     const [currentProject, setCurrentProject] = useState({});
     const [projectsDB, setProjectsDB] = useState([]);
-    const [token, setToken] = useState(props.token);
+    const [token, setToken] = useState(localStorage.getItem('token'));
+    let hasActiveProjects;
 
     useEffect(() => {
-        setToken(localStorage.getItem('token'));
-        console.log(token)
+        let url = "https://auth404.herokuapp.com/api/my-data";
+        let options = {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'x-auth-token': token
+            }
+        }
+
+        fetch(url,options).then(res => res.json()).then(output => setProjectsDB(output.data.data));
+        console.log(projectsDB)
     }, []);
 
     useEffect(() => {
+        let url = "https://auth404.herokuapp.com/api/my-data";
+        let updatedData = [...projectsDB]
+        let options = {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'x-auth-token': token
+            },
+            body: JSON.stringify({data: updatedData})
+            }
 
-
-    let url = "https://auth404.herokuapp.com/api/my-data";
-    let options = {
-        method: "GET",
-        headers: {
-            'Content-Type': 'application/json',
-            'x-auth-token': token
-        }
-    }
-
-    fetch(url,options).then(res => res.json()).then(output => console.log(output));
-
-    // let localProjects = JSON.parse(localStorage.getItem("localProjects"));
-    // if (localProjects !== null) {
-    //     setProjectsDB(localProjects);
-    // }
-
-    });
-
-    useEffect(() => {
-        localStorage.setItem("localProjects", JSON.stringify(projectsDB));
-    });
+        fetch(url,options).then(res => res.json()).then(output => console.log("post", output));
+    }, [projectsDB]);
 
     let activeProjects = projectsDB.filter(project => project.isActive);
-    let hasActiveProjects;
 
-    if (activeProjects.length == 0) {
-        hasActiveProjects = false;
-    } else {
-        hasActiveProjects = true;
-    }
+        if (activeProjects.length == 0) {
+            hasActiveProjects = false;
+        } else {
+            hasActiveProjects = true;
+        }
 
     // PROJECTS
     let ProjectGroup = () => {
@@ -107,8 +106,9 @@ export default function(props) {
         currentlyActive[0].isActive = false;
         currentlyActive[0].totalTime = time;
         setCurrentProject(currentlyActive);
-        projectsDB.splice(currentlyActive[0].id, 1, currentlyActive[0]);
-        setProjectsDB(projectsDB);
+        let duplicate = [...projectsDB];
+        duplicate.splice(currentlyActive[0].id, 1, currentlyActive[0]);
+        setProjectsDB([...duplicate]);
         console.log(projectsDB);
     }
 
@@ -124,7 +124,7 @@ export default function(props) {
         <div>
             <Dashboard 
             username = {props.username} 
-            content = {projectsDB.length > 0 ? <ProjectGroup />: "You have no projects yet."} />
+            content = {projectsDB.length !== 0 ? <ProjectGroup />: "You have no projects yet."} />
             {props.showNewProject ? <NewProject submitNewProject = {submitNewProjectHandler}/> : null}
         </div>
         )

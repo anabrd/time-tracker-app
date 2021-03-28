@@ -28,6 +28,7 @@ function App() {
       setLoggedIn(true);
     } else {
       setLoggedIn(false);
+      setToken(localStorage.getItem("token"))
     }
     console.log("ok on app.js")
   }, []);
