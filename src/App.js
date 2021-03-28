@@ -21,6 +21,7 @@ function App() {
   const [registered, setRegistered] = useState(false);
   const [username, setUsername] = useState("Ana");
   const [showNewProject, setShowNewProject] = useState(false);
+  const [token, setToken] = useState("");
 
   useEffect(() => {
     if (localStorage.getItem("token") !== null) {
@@ -66,7 +67,15 @@ let logout = () => {
               </Route>
 
               <Route path="/">
-                {loggedIn ? <Home username = {username} showNewProject = {showNewProject} setShowNewProject = {setShowNewProject} /> :  <Login setLoggedIn = {setLoggedIn} /> }
+                {loggedIn ?
+                 <Home 
+                 username = {username} 
+                 token = {token}
+                 showNewProject = {showNewProject} 
+                 setShowNewProject = {setShowNewProject} /> : 
+                 <Login 
+                 setLoggedIn = {setLoggedIn} 
+                 setToken = {setToken}/> }
               </Route>
 
             </Switch>

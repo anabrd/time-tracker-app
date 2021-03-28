@@ -25,6 +25,7 @@ export default function(props) {
                     localStorage.setItem("token", output.token);
                     console.log("ok");
                     props.setLoggedIn(true);
+                    props.setToken(output.token);
                 } else {
                     localStorage.removeItem("token");
                     console.log("nope");

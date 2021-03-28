@@ -9,13 +9,33 @@ export default function(props) {
 
     const [currentProject, setCurrentProject] = useState({});
     const [projectsDB, setProjectsDB] = useState([]);
+    const [token, setToken] = useState(props.token);
 
     useEffect(() => {
-    let localProjects = JSON.parse(localStorage.getItem("localProjects"));
-    if (localProjects !== null) {
-        setProjectsDB(localProjects);
-    }
+        setToken(localStorage.getItem('token'));
+        console.log(token)
     }, []);
+
+    useEffect(() => {
+
+
+    let url = "https://auth404.herokuapp.com/api/my-data";
+    let options = {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+            'x-auth-token': token
+        }
+    }
+
+    fetch(url,options).then(res => res.json()).then(output => console.log(output));
+
+    // let localProjects = JSON.parse(localStorage.getItem("localProjects"));
+    // if (localProjects !== null) {
+    //     setProjectsDB(localProjects);
+    // }
+
+    });
 
     useEffect(() => {
         localStorage.setItem("localProjects", JSON.stringify(projectsDB));
