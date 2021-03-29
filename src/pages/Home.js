@@ -1,4 +1,3 @@
-//TODO : Data get and post, add delete
 import './Home.css'
 import NewProject from '../components/NewProject'
 import {useState, useEffect} from 'react'
@@ -8,51 +7,24 @@ import Project from '../components/Project'
 export default function(props) {
 
     const [currentProject, setCurrentProject] = useState({});
-    const [projectsDB, setProjectsDB] = useState([]);
+    const [projectsDB, setProjectsDB] = useState(props.projectsDB);
     let username = props.username;
-    const [token, setToken] = useState(localStorage.getItem('token'));
+
     let hasActiveProjects;
 
-    useEffect(async() => {
-        let url = "https://auth404.herokuapp.com/api/my-data";
-        let options = {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-                'x-auth-token': token
-            }
-        }
+    // ADD TRANSFER
 
-        await fetch(url,options).then(res => res.json()).then(output => setProjectsDB(output.data.data)).catch(error => console.log(error));
-        console.log(projectsDB)
-    }, []);
+    let activeProjects = props.projectsDB.filter(project => project.isActive);
 
-    useEffect(() => {
-        let url = "https://auth404.herokuapp.com/api/my-data";
-        let updatedData = [...projectsDB]
-        let options = {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-                'x-auth-token': token
-            },
-            body: JSON.stringify({data: updatedData})
-            }
-
-        fetch(url,options).then(res => res.json()).then(output => console.log("post", output));
-    }, [projectsDB]);
-
-    let activeProjects = projectsDB.filter(project => project.isActive);
-
-        if (activeProjects.length == 0) {
-            hasActiveProjects = false;
-        } else {
-            hasActiveProjects = true;
-        }
+    if (activeProjects.length == 0) {
+        hasActiveProjects = false;
+    } else {
+        hasActiveProjects = true;
+    }
 
     // PROJECTS
     let ProjectGroup = () => {
-        let projects = projectsDB.map(project => 
+        let projects = props.projectsDB.map(project => 
             <Project 
             projectId = {project.id}  
             name = {project.projectName}
@@ -74,10 +46,10 @@ export default function(props) {
         event.preventDefault();
         let newProject = {};
 
-        if (projectsDB.length == 0) {
+        if (props.projectsDB.length == 0) {
             newProject.id = 0;
         } else {
-            newProject.id = projectsDB[projectsDB.length-1].id + 1;
+            newProject.id = props.projectsDB[props.projectsDB.length-1].id + 1;
         }
         
         newProject.projectName = event.currentTarget.children[1].children[0].value;
@@ -88,13 +60,13 @@ export default function(props) {
         newProject.totalTime = 0;
         newProject.isActive = false;
         props.setShowNewProject(false);
-        setProjectsDB([...projectsDB, newProject]);
+        props.setProjectsDB([...props.projectsDB, newProject]);
     }
 
     // START TIME
     let startTime = (projectId) => {
         // Check if an existing project is already active
-        let currentlyActive = projectsDB.filter(project => project.id == projectId);
+        let currentlyActive = props.projectsDB.filter(project => project.id == projectId);
         currentlyActive[0].status = "active";
         currentlyActive[0].isActive = true;
         setCurrentProject(currentlyActive);
@@ -102,30 +74,28 @@ export default function(props) {
 
     // STOP TIME
     let stopTime = (projectId, time) => {
-        let currentlyActive = projectsDB.filter(project => project.id == projectId);
+        let currentlyActive = props.projectsDB.filter(project => project.id == projectId);
         currentlyActive[0].status = "inactive";
         currentlyActive[0].isActive = false;
         currentlyActive[0].totalTime = time;
         setCurrentProject(currentlyActive);
-        let duplicate = [...projectsDB];
+        let duplicate = [...props.projectsDB];
         duplicate.splice(currentlyActive[0].id, 1, currentlyActive[0]);
-        setProjectsDB([...duplicate]);
-        console.log(projectsDB);
+        props.setProjectsDB([...duplicate]);
     }
 
     let deleteProj = (projectId) => {
-        let duplicate = [...projectsDB];
+        let duplicate = [...props.projectsDB];
         let currentlyActive = duplicate.filter(project => project.id == projectId);
         duplicate.splice(currentlyActive[0].id, 1);
-        setProjectsDB([...duplicate]);
-        console.log(projectsDB);
+        props.setProjectsDB([...duplicate]);
     }
 
     return (
         <div>
             <Dashboard 
             username = {props.username} 
-            content = {projectsDB.length !== 0 ? <ProjectGroup />: "You have no projects yet."} />
+            content = {props.projectsDB.length !== 0 ? <ProjectGroup />: "You have no projects yet."} />
             {props.showNewProject ? <NewProject submitNewProject = {submitNewProjectHandler}/> : null}
         </div>
         )

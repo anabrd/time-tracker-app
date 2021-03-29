@@ -1,3 +1,9 @@
+// TODO: Move DB from home to App
+// Turn existing dashboard to just a div and remake the homepage into a dashboard
+// set username in db
+// finish pie chart with dynamic data rendering
+// add relevnt colors
+
 import Home from './pages/Home'
 import Reports from './pages/Reports'
 import Login from './pages/Login'
@@ -20,8 +26,9 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [registered, setRegistered] = useState(false);
   const [username, setUsername] = useState("");
+  const [projectsDB, setProjectsDB] = useState([]);
   const [showNewProject, setShowNewProject] = useState(false);
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(localStorage.getItem("token"));
 
   useEffect(() => {
     if (localStorage.getItem("token") !== null) {
@@ -32,6 +39,35 @@ function App() {
     }
     console.log("ok on app.js")
   }, []);
+
+  useEffect(async() => {
+        let url = "https://auth404.herokuapp.com/api/my-data";
+        let options = {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'x-auth-token': token
+            }
+        }
+
+        await fetch(url,options).then(res => res.json()).then(output => setProjectsDB(output.data.data)).catch(error => console.log(error));
+        console.log(projectsDB);
+    }, []);
+
+    useEffect(() => {
+        let url = "https://auth404.herokuapp.com/api/my-data";
+        let updatedData = [...projectsDB]
+        let options = {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'x-auth-token': token
+            },
+            body: JSON.stringify({data: updatedData})
+            }
+
+        fetch(url,options).then(res => res.json()).then(output => console.log("post", output));
+    }, [projectsDB]);
 
 let logout = () => {
     localStorage.removeItem("token");
@@ -60,7 +96,7 @@ let logout = () => {
           <Switch>
 
               <Route path="/reports">
-                <Reports />
+                <Reports data = {projectsDB} />
               </Route>
 
               <Route path="/register">
@@ -69,14 +105,16 @@ let logout = () => {
 
               <Route path="/">
                 {loggedIn ?
-                 <Home 
-                 username = {username} 
-                 token = {token}
-                 showNewProject = {showNewProject} 
-                 setShowNewProject = {setShowNewProject} /> : 
-                 <Login 
-                 setLoggedIn = {setLoggedIn} 
-                 setToken = {setToken}/> }
+                <Home 
+                username = {username} 
+                token = {token}
+                projectsDB = {projectsDB}
+                setProjectsDB = {setProjectsDB}
+                showNewProject = {showNewProject} 
+                setShowNewProject = {setShowNewProject} /> : 
+                <Login 
+                setLoggedIn = {setLoggedIn} 
+                setToken = {setToken}/> }
               </Route>
 
             </Switch>
