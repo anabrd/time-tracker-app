@@ -87,7 +87,8 @@ export default function(props) {
     let deleteProj = (projectId) => {
         let duplicate = [...props.projectsDB];
         let currentlyActive = duplicate.filter(project => project.id == projectId);
-        duplicate.splice(currentlyActive[0].id, 1);
+        let deleteIndex = duplicate.indexOf(currentlyActive);
+        duplicate.splice(deleteIndex, 1);
         props.setProjectsDB([...duplicate]);
     }
 
