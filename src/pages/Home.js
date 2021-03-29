@@ -6,7 +6,6 @@ import Project from '../components/Project'
 export default function(props) {
 
     const [currentProject, setCurrentProject] = useState({});
-    let username = props.username;
     let hasActiveProjects;
     let activeProjects = props.projectsDB.filter(project => project.isActive);
 
@@ -16,25 +15,7 @@ export default function(props) {
         hasActiveProjects = true;
     }
 
-    // PROJECTS
-    let ProjectGroup = () => {
-        let projects = props.projectsDB.map(project => 
-            <Project 
-            projectId = {project.id}  
-            name = {project.projectName}
-            description = {project.description} 
-            start = {project.start} 
-            status = {project.status} 
-            timeControl = {timeControl}
-            deleteProj = {deleteProj}
-            totalTime = {project.totalTime} 
-            isActive = {project.isActive}
-            hasActiveProjects = {hasActiveProjects} />);
-        return (<div className="project-wrapper">
-            { projects }
-            </div>);
-    }
-
+    // ADD NEW PROJECT
     let submitNewProjectHandler = (event) => {
         event.preventDefault();
         let newProject = {};
@@ -76,11 +57,31 @@ export default function(props) {
         }
     }
 
+    // DELETE PROJECT
     let deleteProj = (projectId) => {
         let deleteIndex = props.projectsDB.findIndex(project => project.id == projectId);
         let duplicate = [...props.projectsDB];
         duplicate.splice(deleteIndex, 1);
         props.setProjectsDB([...duplicate]);
+    }
+
+        // PROJECTS COMPONENT
+    let ProjectGroup = () => {
+        let projects = props.projectsDB.map(project => 
+            <Project 
+            projectId = {project.id}  
+            name = {project.projectName}
+            description = {project.description} 
+            start = {project.start} 
+            status = {project.status} 
+            timeControl = {timeControl}
+            deleteProj = {deleteProj}
+            totalTime = {project.totalTime} 
+            isActive = {project.isActive}
+            hasActiveProjects = {hasActiveProjects} />);
+        return (<div className="project-wrapper">
+            { projects }
+            </div>);
     }
 
     return (

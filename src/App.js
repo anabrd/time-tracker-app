@@ -1,10 +1,8 @@
-// TODO: Move DB from home to App
-// Merge start and stop time functions
+// TODO:
 // Add username to database
-// Turn existing dashboard to just a div and remake the homepage into a dashboard
 // set username in db
-// finish pie chart with dynamic data rendering
-// add relevant colors to pie chard
+// update pie chart with dynamic data rendering
+// add relevant colors to pie chart
 // change navbar add proj button when not on dashboard
 
 import Home from './pages/Home'

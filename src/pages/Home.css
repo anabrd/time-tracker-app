@@ -5,7 +5,7 @@ body {
     text-align: center;
     height: 100vmin;
     font-size: 1.2em;
-    color: rgb(30, 43, 43);
+    color: #1e2b2b;
     font-family: 'Montserrat',
     sans-serif;
     background: #ECE9E6;
@@ -173,4 +173,9 @@ span {
 
 .active-project {
     border: 2px solid #43943f;
+}
+
+.reportsWrapper {
+    width: 100vw;
+    height: 500px;
 }
