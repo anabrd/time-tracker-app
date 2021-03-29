@@ -1,8 +1,4 @@
-import {useState} from 'react';
 export default function(props) {
-    // Register new user using bulent's api
-    // Duplicate the same structure in local storage??
-
     let registerHandler = (e) => {
         e.preventDefault();
 

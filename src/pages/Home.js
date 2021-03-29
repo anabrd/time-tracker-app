@@ -1,19 +1,13 @@
 import './Home.css'
 import NewProject from '../components/NewProject'
 import {useState, useEffect} from 'react'
-import Dashboard from '../components/Dashboard'
 import Project from '../components/Project'
 
 export default function(props) {
 
     const [currentProject, setCurrentProject] = useState({});
-    const [projectsDB, setProjectsDB] = useState(props.projectsDB);
     let username = props.username;
-
     let hasActiveProjects;
-
-    // ADD TRANSFER
-
     let activeProjects = props.projectsDB.filter(project => project.isActive);
 
     if (activeProjects.length == 0) {
@@ -94,10 +88,11 @@ export default function(props) {
 
     return (
         <div>
-            <Dashboard 
-            username = {props.username} 
-            content = {props.projectsDB.length !== 0 ? <ProjectGroup />: "You have no projects yet."} />
+            <div>
+            <h3>Welcome{/* , {props.username} */}!</h3>
+            <p>{props.projectsDB.length !== 0 ? <ProjectGroup />: "You have no projects yet."}</p>
             {props.showNewProject ? <NewProject submitNewProject = {submitNewProjectHandler}/> : null}
+            </div>
         </div>
         )
 }

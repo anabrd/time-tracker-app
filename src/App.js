@@ -1,8 +1,11 @@
 // TODO: Move DB from home to App
+// Merge start and stop time functions
+// Add username to database
 // Turn existing dashboard to just a div and remake the homepage into a dashboard
 // set username in db
 // finish pie chart with dynamic data rendering
-// add relevnt colors
+// add relevant colors to pie chard
+// change navbar add proj button when not on dashboard
 
 import Home from './pages/Home'
 import Reports from './pages/Reports'
@@ -29,6 +32,8 @@ function App() {
   const [projectsDB, setProjectsDB] = useState([]);
   const [showNewProject, setShowNewProject] = useState(false);
   const [token, setToken] = useState(localStorage.getItem("token"));
+  const [pathname, setPathname] = useState(window.location.pathname);
+  console.log(pathname)
 
   useEffect(() => {
     if (localStorage.getItem("token") !== null) {
