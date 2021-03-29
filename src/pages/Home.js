@@ -25,8 +25,7 @@ export default function(props) {
             description = {project.description} 
             start = {project.start} 
             status = {project.status} 
-            play = {startTime}
-            stop = {stopTime}
+            timeControl = {timeControl}
             deleteProj = {deleteProj}
             totalTime = {project.totalTime} 
             isActive = {project.isActive}
@@ -57,31 +56,29 @@ export default function(props) {
         props.setProjectsDB([...props.projectsDB, newProject]);
     }
 
-    // START TIME
-    let startTime = (projectId) => {
-        // Check if an existing project is already active
-        let currentlyActive = props.projectsDB.filter(project => project.id == projectId);
-        currentlyActive[0].status = "active";
-        currentlyActive[0].isActive = true;
-        setCurrentProject(currentlyActive);
-    }
+    // TIME CONTROLLER
+    let timeControl = (action, projectId, time) => {
 
-    // STOP TIME
-    let stopTime = (projectId, time) => {
         let currentlyActive = props.projectsDB.filter(project => project.id == projectId);
-        currentlyActive[0].status = "inactive";
-        currentlyActive[0].isActive = false;
-        currentlyActive[0].totalTime = time;
-        setCurrentProject(currentlyActive);
-        let duplicate = [...props.projectsDB];
-        duplicate.splice(currentlyActive[0].id, 1, currentlyActive[0]);
-        props.setProjectsDB([...duplicate]);
+
+        if (action == "play") {
+            currentlyActive[0].status = "active";
+            currentlyActive[0].isActive = true;
+            setCurrentProject(currentlyActive);
+        } else {
+            currentlyActive[0].status = "inactive";
+            currentlyActive[0].isActive = false;
+            currentlyActive[0].totalTime = time;
+            setCurrentProject(currentlyActive);
+            let duplicate = [...props.projectsDB];
+            duplicate.splice(currentlyActive[0].id, 1, currentlyActive[0]);
+            props.setProjectsDB([...duplicate]);
+        }
     }
 
     let deleteProj = (projectId) => {
+        let deleteIndex = props.projectsDB.findIndex(project => project.id == projectId);
         let duplicate = [...props.projectsDB];
-        let currentlyActive = duplicate.filter(project => project.id == projectId);
-        let deleteIndex = duplicate.indexOf(currentlyActive);
         duplicate.splice(deleteIndex, 1);
         props.setProjectsDB([...duplicate]);
     }
@@ -90,7 +87,7 @@ export default function(props) {
         <div>
             <div>
             <h3>Welcome{/* , {props.username} */}!</h3>
-            <p>{props.projectsDB.length !== 0 ? <ProjectGroup />: "You have no projects yet."}</p>
+            <div>{props.projectsDB.length !== 0 ? <ProjectGroup />: "You have no projects yet."}</div>
             {props.showNewProject ? <NewProject submitNewProject = {submitNewProjectHandler}/> : null}
             </div>
         </div>
