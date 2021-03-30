@@ -20,12 +20,7 @@ export default function(props) {
         event.preventDefault();
         let newProject = {};
 
-        if (props.projectsDB.length == 0) {
-            newProject.id = 0;
-        } else {
-            newProject.id = props.projectsDB[props.projectsDB.length-1].id + 1;
-        }
-        
+        newProject.id = Date.now();
         newProject.projectName = event.currentTarget.children[1].children[0].value;
         newProject.description = event.currentTarget.children[1].children[1].value;
         newProject.start = new Date().toLocaleString();
@@ -35,18 +30,18 @@ export default function(props) {
         newProject.isActive = false;
         props.setShowNewProject(false);
         props.setProjectsDB([...props.projectsDB, newProject]);
+        console.log(props.projectsDB)
     }
 
     // TIME CONTROLLER
     let timeControl = (action, projectId, time) => {
-        
-
         let currentlyActive = props.projectsDB.filter(project => project.id == projectId);
 
         if (action == "play") {
             currentlyActive[0].status = "active";
             currentlyActive[0].isActive = true;
             setCurrentProject({...currentlyActive[0]});
+            console.log(props.projectsDB)
         } else {
             currentlyActive[0].status = "inactive";
             currentlyActive[0].isActive = false;
