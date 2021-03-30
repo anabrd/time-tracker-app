@@ -1,6 +1,6 @@
 export default function(props) {
     return(
-        <form className="new-project-card" onSubmit={props.submitNewProject}>
+        <form className="new-project-card" onSubmit={props.projectHandler}>
             <h3>Create New Project</h3>
             <div className="input-wrapper">
             <input type="text" placeholder="Name" value={props.name}></input>

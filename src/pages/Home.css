@@ -84,10 +84,17 @@ input[type=text] {
 input[type=email]:focus,
 input[type=password]:focus,
 input[type=text]:focus {
+    outline: none;
     border: 2px solid #FFC839;
     border-radius: 7px;
 }
 
+p:focus {
+    outline: none;
+}
+h3:focus {
+    outline: none;
+}
 .btn-wrapper {
     display: flex;
     padding: 4%;
@@ -145,7 +152,6 @@ span {
     border: 0;
     box-sizing: border-box;
     box-shadow: inset 0 0 0 2px darkslategrey;
-
 }
 
 .project-wrapper {

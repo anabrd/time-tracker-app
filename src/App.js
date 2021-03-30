@@ -1,9 +1,22 @@
 // TODO:
+
+// PRIMARY
+// Add edit to card
 // Add username to database
 // set username in db
 // update pie chart with dynamic data rendering
 // add relevant colors to pie chart
 // change navbar add proj button when not on dashboard
+// fix toggle buttons on active/inactive projects
+
+// SECONDARY
+// Add search, filter function by tags or dates
+// Same filter for project report
+// Add and edit project
+// Design rehaul
+// Mobile design
+
+
 
 import Home from './pages/Home'
 import Reports from './pages/Reports'
@@ -40,7 +53,7 @@ function App() {
       setLoggedIn(false);
       setToken(localStorage.getItem("token"))
     }
-    console.log("ok on app.js")
+
   }, []);
 
   useEffect(async() => {

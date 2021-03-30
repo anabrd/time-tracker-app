@@ -28,6 +28,7 @@ export default function(props) {
         newProject.startTime = null;
         newProject.totalTime = 0;
         newProject.isActive = false;
+        newProject.isEditable = false;
         props.setShowNewProject(false);
         props.setProjectsDB([...props.projectsDB, newProject]);
         console.log(props.projectsDB)
@@ -41,7 +42,6 @@ export default function(props) {
             currentlyActive[0].status = "active";
             currentlyActive[0].isActive = true;
             setCurrentProject({...currentlyActive[0]});
-            console.log(props.projectsDB)
         } else {
             currentlyActive[0].status = "inactive";
             currentlyActive[0].isActive = false;
@@ -62,6 +62,19 @@ export default function(props) {
         props.setProjectsDB([...duplicate]);
     }
 
+    let editProject = (e, status, projectId, name, description) => {
+        let currentlyActive = props.projectsDB.filter(project => project.id == projectId);
+            currentlyActive[0].isEditable = status;
+            currentlyActive[0].projectName = name;
+             currentlyActive[0].description = description;
+            console.log(currentlyActive)
+            console.log(e)
+        let duplicate = [...props.projectsDB];
+        let replaceIndex = props.projectsDB.findIndex(project => project.id == projectId);
+        duplicate.splice(replaceIndex, 1, currentlyActive[0]);
+        props.setProjectsDB([...duplicate]);
+    }
+
         // PROJECTS COMPONENT
     let ProjectGroup = () => {
         let projects = props.projectsDB.map(project => 
@@ -72,21 +85,23 @@ export default function(props) {
             start = {project.start} 
             status = {project.status} 
             timeControl = {timeControl}
+            editProject = {editProject}
             deleteProj = {deleteProj}
             totalTime = {project.totalTime} 
             isActive = {project.isActive}
+            editable = {project.isEditable}
             hasActiveProjects = {hasActiveProjects} />);
-        return (<div className="project-wrapper">
-            { projects }
-            </div>);
+        return (<div className="project-wrapper"> { projects } </div>);
     }
+
+
 
     return (
         <div>
             <div>
             <h3>Welcome{/* , {props.username} */}!</h3>
             <div>{props.projectsDB.length !== 0 ? <ProjectGroup />: "You have no projects yet."}</div>
-            {props.showNewProject ? <NewProject submitNewProject = {submitNewProjectHandler}/> : null}
+            {props.showNewProject ? <NewProject projectHandler = {submitNewProjectHandler}/> : null}
             </div>
         </div>
         )
