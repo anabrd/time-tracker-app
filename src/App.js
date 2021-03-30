@@ -31,7 +31,7 @@ function App() {
   const [showNewProject, setShowNewProject] = useState(false);
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [pathname, setPathname] = useState(window.location.pathname);
-  console.log(pathname)
+  console.log(pathname);
 
   useEffect(() => {
     if (localStorage.getItem("token") !== null) {
@@ -92,12 +92,10 @@ let logout = () => {
                 <li>
                   {loggedIn ?  <Link to="/" onClick = {logout}>Logout</Link> : null}
                 </li>
-                
             </ul>
         </nav>
         <main>
           <Switch>
-
               <Route path="/reports">
                 <Reports data = {projectsDB} />
               </Route>
@@ -109,8 +107,6 @@ let logout = () => {
               <Route path="/">
                 {loggedIn ?
                 <Home 
-                username = {username} 
-                token = {token}
                 projectsDB = {projectsDB}
                 setProjectsDB = {setProjectsDB}
                 showNewProject = {showNewProject} 

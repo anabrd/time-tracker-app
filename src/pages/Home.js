@@ -1,6 +1,6 @@
 import './Home.css'
 import NewProject from '../components/NewProject'
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
 import Project from '../components/Project'
 
 export default function(props) {
@@ -39,20 +39,22 @@ export default function(props) {
 
     // TIME CONTROLLER
     let timeControl = (action, projectId, time) => {
+        
 
         let currentlyActive = props.projectsDB.filter(project => project.id == projectId);
 
         if (action == "play") {
             currentlyActive[0].status = "active";
             currentlyActive[0].isActive = true;
-            setCurrentProject(currentlyActive);
+            setCurrentProject({...currentlyActive[0]});
         } else {
             currentlyActive[0].status = "inactive";
             currentlyActive[0].isActive = false;
             currentlyActive[0].totalTime = time;
-            setCurrentProject(currentlyActive);
+            setCurrentProject({...currentlyActive[0]});
             let duplicate = [...props.projectsDB];
-            duplicate.splice(currentlyActive[0].id, 1, currentlyActive[0]);
+            let replaceIndex = props.projectsDB.findIndex(project => project.id == projectId);
+            duplicate.splice(replaceIndex, 1, currentlyActive[0]);
             props.setProjectsDB([...duplicate]);
         }
     }

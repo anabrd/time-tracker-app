@@ -26,7 +26,7 @@ export default function(props) {
           <h3>Here's the breakdown of your logs.</h3>
           <p>Hover over the chart for more info.</p>
         </div>
-        <Doughnut width = {50} height = {10} data={{
+        <Doughnut width = {50} height = {10}  options={{ maintainAspectRatio: false }} data={{
             labels: pieData.labels,
             datasets: [
               {
