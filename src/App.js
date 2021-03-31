@@ -4,6 +4,7 @@
 // Fix edit lack of update on first change
 // Add username to database
 // set username in db
+// add fallback for report with no data
 // update pie chart with dynamic data rendering
 // add relevant colors to pie chart
 // change navbar add proj button when not on dashboard
