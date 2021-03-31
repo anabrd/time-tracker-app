@@ -1,13 +1,14 @@
 // TODO:
 
 // PRIMARY
-// Add edit to card
+// Fix edit lack of update on first change
 // Add username to database
 // set username in db
 // update pie chart with dynamic data rendering
 // add relevant colors to pie chart
 // change navbar add proj button when not on dashboard
-// fix toggle buttons on active/inactive projects
+// add classes depending on active and editable
+// move to api-to-go
 
 // SECONDARY
 // Add search, filter function by tags or dates
@@ -15,8 +16,6 @@
 // Add and edit project
 // Design rehaul
 // Mobile design
-
-
 
 import Home from './pages/Home'
 import Reports from './pages/Reports'
@@ -39,12 +38,9 @@ function App() {
 
   const [loggedIn, setLoggedIn] = useState(false);
   const [registered, setRegistered] = useState(false);
-  const [username, setUsername] = useState("");
   const [projectsDB, setProjectsDB] = useState([]);
   const [showNewProject, setShowNewProject] = useState(false);
   const [token, setToken] = useState(localStorage.getItem("token"));
-  const [pathname, setPathname] = useState(window.location.pathname);
-  console.log(pathname);
 
   useEffect(() => {
     if (localStorage.getItem("token") !== null) {
@@ -56,20 +52,21 @@ function App() {
 
   }, []);
 
-  useEffect(async() => {
-        let url = "https://auth404.herokuapp.com/api/my-data";
-        let options = {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-                'x-auth-token': token
-            }
+  // GET
+  useEffect(() => {
+    let url = "https://auth404.herokuapp.com/api/my-data";
+    let options = {
+        method: "GET",
+        headers: {
+          'Content-Type': 'application/json',
+          'x-auth-token': token
         }
+    }
 
-        await fetch(url,options).then(res => res.json()).then(output => setProjectsDB(output.data.data)).catch(error => console.log(error));
-        console.log(projectsDB);
+    fetch(url,options).then(res => res.json()).then(output => setProjectsDB(output.data.data)).catch(error => console.log(error));
     }, []);
 
+    // POST
     useEffect(() => {
         let url = "https://auth404.herokuapp.com/api/my-data";
         let updatedData = [...projectsDB]
@@ -83,7 +80,7 @@ function App() {
             }
 
         fetch(url,options).then(res => res.json()).then(output => console.log("post", output));
-    }, [projectsDB]);
+    }, [/* projectsDB */]);
 
 let logout = () => {
     localStorage.removeItem("token");
@@ -114,7 +111,7 @@ let logout = () => {
               </Route>
 
               <Route path="/register">
-                {registered ? <Redirect to="/" /> : <Register setRegistered = {setRegistered} username = {setUsername}/>}
+                {registered ? <Redirect to="/" /> : <Register setRegistered = {setRegistered}/>}
               </Route>
 
               <Route path="/">

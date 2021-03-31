@@ -10,8 +10,6 @@ export default function(props) {
     const [hours, setHours] = useState(Math.floor(props.totalTime/3600));
     const [name, setName] = useState(props.name);
     const [description, setDescription] = useState(props.description);
-    console.log(name);
-    console.log(description)
 
     useEffect(() => {
     if (props.isActive) {
@@ -24,17 +22,17 @@ export default function(props) {
 
 
     return(
-        <div  style = {props.isActive ? {backgroundColor: "green", color: "white", transition: "0.5s"} : null} className="project">
+        <div  style = {props.isActive ? {border: "2px solid green", transition: "0.2s"} : null} className="project">
             <h3 
             contentEditable = {props.editable ? true : false} 
-            style = {props.editable ? {borderBottom: "2px solid #FFC839", transition: "0.1s"}: null} 
+            style = {props.editable ? {borderBottom: "2px solid #9C20B0", transition: "0.4s"}: null} 
             onInput = {(e) => setName(e.target.innerText)}
             >
                 {props.name}
             </h3>
             <p 
             contentEditable = {props.editable ? true : false} 
-            style = {props.editable ? {borderBottom: "2px solid #FFC839", transition: "0.1s"}: null}
+            style = {props.editable ? {borderBottom: "2px solid #9C20B0", transition: "0.4s"}: null}
             onInput = {(e) => setDescription(e.target.innerText)}
             >
                 {props.description}
@@ -42,28 +40,26 @@ export default function(props) {
             <p>Started: {props.start}</p>
             <p>Status: {props.status}</p>
             <p>Total time: {hours}h {minutes}m {seconds}s</p>
-            {props.isActive && props.hasActiveProjects ? 
+            {props.isActive && 
                 <div className="btn-wrapper">
                 <FontAwesomeIcon 
-                    className = "btn-ctrl" 
+                    className = "btn-active" 
                     icon={faStop} 
                     onClick={() => props.timeControl("stop", props.projectId, totalSeconds)}/>
-                <FontAwesomeIcon 
-                    className = "btn-ctrl" 
-                    icon={faTrashAlt} 
-                    onClick={() => props.deleteProj(props.projectId)}/>
-                <FontAwesomeIcon 
-                    className = "btn-ctrl" 
-                    icon={props.editable ? faCheckCircle : faPen} 
-                    onClick={props.editable ? (e) => props.editProject(e, false, props.projectId, name, description) : (e) => props.editProject(e, true, props.projectId, name, description)}/>
-                </div>:
-                null
-                }
+                </div>}
             {!props.isActive && !props.hasActiveProjects ? 
                 <div className="btn-wrapper">
-                <FontAwesomeIcon className = "btn-ctrl" icon={faPlay} onClick={() => props.timeControl("play", props.projectId, totalSeconds)}/>
-                <FontAwesomeIcon className = "btn-ctrl" icon={faTrashAlt} onClick={() => props.deleteProj(props.projectId)}/>
-                <FontAwesomeIcon className = "btn-ctrl" icon={props.editable ? faCheckCircle : faPen} onClick={props.editable ? (e) => props.editProject(e, false, props.projectId, name, description) : (e) => props.editProject(e, true, props.projectId, name, description)}/>
+                {!props.editable && <FontAwesomeIcon 
+                    className = "btn-ctrl" 
+                    icon={faPlay} 
+                    onClick={() => props.timeControl("play", props.projectId, totalSeconds)}/>}
+                {!props.editable && <FontAwesomeIcon 
+                    className = "btn-ctrl" 
+                    icon={faTrashAlt} onClick={() => props.deleteProj(props.projectId)}/>}
+                <FontAwesomeIcon 
+                    icon = {props.editable ? faCheckCircle : faPen} 
+                    className = {props.editable ? "btn-active" : "btn-ctrl"}
+                    onClick = {props.editable ? (e) => props.editProject(e, false, props.projectId, name, description) : (e) => props.editProject(e, true, props.projectId, name, description)}/>
                 </div>:
                 null
             }

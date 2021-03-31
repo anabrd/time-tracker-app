@@ -1,4 +1,4 @@
-import './Home.css'
+import './Styles.css'
 import NewProject from '../components/NewProject'
 import {useState} from 'react'
 import Project from '../components/Project'
@@ -19,7 +19,6 @@ export default function(props) {
     let submitNewProjectHandler = (event) => {
         event.preventDefault();
         let newProject = {};
-
         newProject.id = Date.now();
         newProject.projectName = event.currentTarget.children[1].children[0].value;
         newProject.description = event.currentTarget.children[1].children[1].value;
@@ -31,7 +30,6 @@ export default function(props) {
         newProject.isEditable = false;
         props.setShowNewProject(false);
         props.setProjectsDB([...props.projectsDB, newProject]);
-        console.log(props.projectsDB)
     }
 
     // TIME CONTROLLER
@@ -75,7 +73,7 @@ export default function(props) {
         props.setProjectsDB([...duplicate]);
     }
 
-        // PROJECTS COMPONENT
+    // PROJECTS COMPONENT
     let ProjectGroup = () => {
         let projects = props.projectsDB.map(project => 
             <Project 
