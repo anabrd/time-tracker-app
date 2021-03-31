@@ -5,6 +5,7 @@ export default function(props) {
 
     let logInHandler = (e) => {
         e.preventDefault();
+
         let email = e.currentTarget.children[1].value;
         let pass = e.currentTarget.children[2].value;
 

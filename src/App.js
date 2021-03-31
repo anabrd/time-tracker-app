@@ -43,11 +43,14 @@ function App() {
   useEffect(() => {
     if (localStorage.getItem("api-to-go") !== null) {
       setLoggedIn(true);
-      ApiToGo.get().then(output => setProjectsDB(output[0]));
     } else {
       setLoggedIn(false);
-      setToken(localStorage.getItem("api-to-go"))
+      setToken(localStorage.getItem("api-to-go"));
     }
+  }, [loggedIn]);
+
+  useEffect(() => {
+    ApiToGo.get().then(output => setProjectsDB(output[0])).catch(error => console.log(error));
   }, []);
 
   useEffect(() => {
@@ -58,7 +61,8 @@ function App() {
       localStorage.removeItem("api-to-go");
       setLoggedIn(false);
       setRegistered(false);
-    }
+      setProjectsDB([]);
+  }
 
   return (
     <Router>
@@ -96,7 +100,7 @@ function App() {
                 setShowNewProject = {setShowNewProject} /> : 
                 <Login 
                 setLoggedIn = {setLoggedIn} 
-                setToken = {setToken}/> }
+                /> }
               </Route>
 
             </Switch>
