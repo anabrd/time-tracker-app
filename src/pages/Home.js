@@ -6,14 +6,6 @@ import Project from '../components/Project'
 export default function(props) {
 
     const [currentProject, setCurrentProject] = useState({});
-    let hasActiveProjects;
-    let activeProjects = props.projectsDB.filter(project => project.isActive);
-
-    if (activeProjects.length == 0) {
-        hasActiveProjects = false;
-    } else {
-        hasActiveProjects = true;
-    }
 
     // ADD NEW PROJECT
     let submitNewProjectHandler = (event) => {
@@ -87,8 +79,7 @@ export default function(props) {
             deleteProj = {deleteProj}
             totalTime = {project.totalTime} 
             isActive = {project.isActive}
-            editable = {project.isEditable}
-            hasActiveProjects = {hasActiveProjects} />);
+            editable = {project.isEditable} />);
         return (<div className="project-wrapper"> { projects } </div>);
     }
 

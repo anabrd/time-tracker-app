@@ -1,36 +1,19 @@
 import {Link} from 'react-router-dom'
+import ApiToGo from "api-to-go"
+
 export default function(props) {
 
     let logInHandler = (e) => {
         e.preventDefault();
+        let email = e.currentTarget.children[1].value;
+        let pass = e.currentTarget.children[2].value;
 
-        let data = {};
-
-        data.email = e.currentTarget.children[1].value;
-        data.pass = e.currentTarget.children[2].value;
-
-        let urlLogin = 'https://auth404.herokuapp.com/api/auth/login';
-
-        let options = {
-            method:'POST', 
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body:JSON.stringify(data)
-        }
-
-        fetch(urlLogin, options).then(result => result.json()
-            .then(output => {
-                if (output.status == "success") {
-                    localStorage.setItem("token", output.token);
-                    console.log("ok");
+        ApiToGo.login(email,pass).then(output =>
+            {
+                if (output !== null) {
                     props.setLoggedIn(true);
-                    props.setToken(output.token);
-                } else {
-                    localStorage.removeItem("token");
-                    console.log("nope");
                 }
-            }));
+            });
     }
 
     return(

@@ -7,12 +7,10 @@
 // update pie chart with dynamic data rendering
 // add relevant colors to pie chart
 // change navbar add proj button when not on dashboard
-// add classes depending on active and editable
-// move to api-to-go
 
 // SECONDARY
 // Add search, filter function by tags or dates
-// Same filter for project report
+// Same filter for project reports
 // Add and edit project
 // Design rehaul
 // Mobile design
@@ -30,8 +28,8 @@ import {
   Link,
   Redirect
 } from "react-router-dom";
-import './App.css'
-
+import './App.css';
+import ApiToGo from "api-to-go"
 
 
 function App() {
@@ -40,52 +38,27 @@ function App() {
   const [registered, setRegistered] = useState(false);
   const [projectsDB, setProjectsDB] = useState([]);
   const [showNewProject, setShowNewProject] = useState(false);
-  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [token, setToken] = useState(localStorage.getItem("api-to-go"));
 
   useEffect(() => {
-    if (localStorage.getItem("token") !== null) {
+    if (localStorage.getItem("api-to-go") !== null) {
       setLoggedIn(true);
+      ApiToGo.get().then(output => setProjectsDB(output[0]));
     } else {
       setLoggedIn(false);
-      setToken(localStorage.getItem("token"))
+      setToken(localStorage.getItem("api-to-go"))
     }
-
   }, []);
 
-  // GET
   useEffect(() => {
-    let url = "https://auth404.herokuapp.com/api/my-data";
-    let options = {
-        method: "GET",
-        headers: {
-          'Content-Type': 'application/json',
-          'x-auth-token': token
-        }
+    ApiToGo.post(projectsDB).then(output => console.log(output));
+  }, [projectsDB]);
+
+  let logout = () => {
+      localStorage.removeItem("api-to-go");
+      setLoggedIn(false);
+      setRegistered(false);
     }
-
-    fetch(url,options).then(res => res.json()).then(output => setProjectsDB(output.data.data)).catch(error => console.log(error));
-    }, []);
-
-    // POST
-    useEffect(() => {
-        let url = "https://auth404.herokuapp.com/api/my-data";
-        let updatedData = [...projectsDB]
-        let options = {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-                'x-auth-token': token
-            },
-            body: JSON.stringify({data: updatedData})
-            }
-
-        fetch(url,options).then(res => res.json()).then(output => console.log("post", output));
-    }, [/* projectsDB */]);
-
-let logout = () => {
-    localStorage.removeItem("token");
-    setLoggedIn(false);
-  }
 
   return (
     <Router>

@@ -26,28 +26,25 @@ export default function(props) {
             <h3 
             contentEditable = {props.editable ? true : false} 
             style = {props.editable ? {borderBottom: "2px solid #9C20B0", transition: "0.4s"}: null} 
-            onInput = {(e) => setName(e.target.innerText)}
-            >
+            onInput = {(e) => setName(e.target.innerText)}>
                 {props.name}
             </h3>
             <p 
             contentEditable = {props.editable ? true : false} 
             style = {props.editable ? {borderBottom: "2px solid #9C20B0", transition: "0.4s"}: null}
-            onInput = {(e) => setDescription(e.target.innerText)}
-            >
+            onInput = {(e) => setDescription(e.target.innerText)}>
                 {props.description}
             </p>
             <p>Started: {props.start}</p>
             <p>Status: {props.status}</p>
             <p>Total time: {hours}h {minutes}m {seconds}s</p>
-            {props.isActive && 
+            {props.isActive ?
                 <div className="btn-wrapper">
-                <FontAwesomeIcon 
-                    className = "btn-active" 
-                    icon={faStop} 
-                    onClick={() => props.timeControl("stop", props.projectId, totalSeconds)}/>
-                </div>}
-            {!props.isActive && !props.hasActiveProjects ? 
+                    <FontAwesomeIcon 
+                        className = "btn-active" 
+                        icon={faStop} 
+                        onClick={() => props.timeControl("stop", props.projectId, totalSeconds)}/>
+                </div> : 
                 <div className="btn-wrapper">
                 {!props.editable && <FontAwesomeIcon 
                     className = "btn-ctrl" 
@@ -60,9 +57,7 @@ export default function(props) {
                     icon = {props.editable ? faCheckCircle : faPen} 
                     className = {props.editable ? "btn-active" : "btn-ctrl"}
                     onClick = {props.editable ? (e) => props.editProject(e, false, props.projectId, name, description) : (e) => props.editProject(e, true, props.projectId, name, description)}/>
-                </div>:
-                null
-            }
+                </div>}
             </div>
     )
 }
