@@ -67,8 +67,9 @@ export default function(props) {
 
     // PROJECTS COMPONENT
     let ProjectGroup = () => {
-        let projects = props.projectsDB.map(project => 
+        let projects = props.projectsDB.map((project, index) => 
             <Project 
+            key = {index}
             projectId = {project.id}  
             name = {project.projectName}
             description = {project.description} 

@@ -23,7 +23,7 @@ export default function(props) {
     let output;
 
     if (rawData.length == 0) {
-      output = <p>Whoos, nothing to show here yet!</p>
+      output = <p>Whoops, nothing to show here yet!</p>
     } else {
       output = <div>
                 <div className = "reportsInfo">

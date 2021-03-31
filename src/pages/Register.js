@@ -18,9 +18,9 @@ export default function(props) {
         <div className="card">
             <form onSubmit = {registerHandler}>
                 <h3>Register</h3>
-                <input type="text" placeholder="Choose your username" />
-                <input type="email" placeholder="Enter Email" />
-                <input type="password" placeholder="Enter Password" />
+                <input type="text" placeholder="Choose your username" autoComplete/>
+                <input type="email" placeholder="Enter Email" autoComplete/>
+                <input type="password" placeholder="Enter Password" autoComplete/>
                 <input type="submit" className="btn btn-main" value="Register"/>
             </form>
         </div>

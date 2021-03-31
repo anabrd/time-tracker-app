@@ -44,15 +44,17 @@ function App() {
   useEffect(() => {
     if (localStorage.getItem("api-to-go") !== null) {
       setLoggedIn(true);
+      console.log("log in happens")
     } else {
       setLoggedIn(false);
-      setToken(localStorage.getItem("api-to-go"));
     }
-  }, [loggedIn]);
+  }, []);
 
   useEffect(() => {
+    console.log("get happens")
     ApiToGo.get().then(output => setProjectsDB(output[0])).catch(error => console.log(error));
-  }, []);
+    console.log("inside get", projectsDB)
+  }, [token]);
 
   useEffect(() => {
     ApiToGo.post(projectsDB).then(output => console.log(output));
@@ -101,6 +103,7 @@ function App() {
                 setShowNewProject = {setShowNewProject} /> : 
                 <Login 
                 setLoggedIn = {setLoggedIn} 
+                setToken = {setToken}
                 /> }
               </Route>
 
