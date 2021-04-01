@@ -22,7 +22,7 @@ export default function(props) {
 
     let output;
 
-    if (rawData.length == 0) {
+    if (pieData.values[0] == 0) {
       output = <p>Whoops, nothing to show here yet!</p>
     } else {
       output = <div>

@@ -1,7 +1,8 @@
 import './Styles.css'
 import NewProject from '../components/NewProject'
-import {useState} from 'react'
 import Project from '../components/Project'
+import Loader from '../components/Loader'
+import {useState} from 'react'
 
 export default function(props) {
 
@@ -56,7 +57,7 @@ export default function(props) {
         let currentlyActive = props.projectsDB.filter(project => project.id == projectId);
             currentlyActive[0].isEditable = status;
             currentlyActive[0].projectName = name;
-             currentlyActive[0].description = description;
+            currentlyActive[0].description = description;
             console.log(currentlyActive)
             console.log(e)
         let duplicate = [...props.projectsDB];
@@ -89,8 +90,9 @@ export default function(props) {
     return (
         <div>
             <div>
-            <h3>Welcome{/* , {props.username} */}!</h3>
-            <div>{props.projectsDB.length !== 0 ? <ProjectGroup />: "You have no projects yet."}</div>
+            <h3>Welcome!</h3>
+            {props.loader ? <Loader /> : null}
+            <div>{props.projectsDB.length !== 0 || props.loader ? <ProjectGroup />: "You have no projects yet."}</div>
             {props.showNewProject ? <NewProject projectHandler = {submitNewProjectHandler}/> : null}
             </div>
         </div>

@@ -2,6 +2,7 @@
 
 // PRIMARY
 // Fix edit lack of update on first change
+// Fix first render of data upon login
 // Add username to database
 // set username in db
 // add fallback for report with no data
@@ -36,6 +37,7 @@ import ApiToGo from "api-to-go"
 function App() {
 
   const [loggedIn, setLoggedIn] = useState(false);
+  const [loader, setLoader] = useState(true);
   const [registered, setRegistered] = useState(false);
   const [projectsDB, setProjectsDB] = useState([]);
   const [showNewProject, setShowNewProject] = useState(false);
@@ -51,14 +53,23 @@ function App() {
   }, []);
 
   useEffect(() => {
+    setLoader(true);
     console.log("get happens")
-    ApiToGo.get().then(output => setProjectsDB(output[0])).catch(error => console.log(error));
+    console.log("loader in useEffect", loader)
+    ApiToGo.get().then(output => 
+      {setProjectsDB(output[0]);
+      setLoader(false);
+      }).catch(error => console.log(error));
     console.log("inside get", projectsDB)
+    
   }, [token]);
+
+  console.log("loader out of useEffect", loader)
 
   useEffect(() => {
     ApiToGo.post(projectsDB).then(output => console.log(output));
   }, [projectsDB]);
+
 
   let logout = () => {
       localStorage.removeItem("api-to-go");
@@ -97,6 +108,7 @@ function App() {
               <Route path="/">
                 {loggedIn ?
                 <Home 
+                loader = {loader}
                 projectsDB = {projectsDB}
                 setProjectsDB = {setProjectsDB}
                 showNewProject = {showNewProject} 
