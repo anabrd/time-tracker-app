@@ -1,6 +1,7 @@
 // TODO:
 
 // PRIMARY
+// fix add array of components
 // Fix edit lack of update on first change
 // Fix first render of data upon login
 // Add username to database

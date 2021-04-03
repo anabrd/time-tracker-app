@@ -18,11 +18,11 @@ export default function(props) {
         setTimeout(function() {setSeconds((seconds+1)%60)}, 1000);
         setMinutes(Math.floor(totalSeconds/60)%60);
         setHours(Math.floor(totalSeconds/3600));
-    }}, [seconds]);
+    }}, [seconds, props.isActive]);
 
 
     return(
-        <div  style = {props.isActive ? {border: "2px solid green", transition: "0.2s"} : null} className="project">
+        <div style = {props.isActive ? {border: "2px solid green", transition: "0.2s"} : null} className="project">
             <h3 
             contentEditable = {props.editable ? true : false} 
             style = {props.editable ? {borderBottom: "2px solid #9C20B0", transition: "0.4s"}: null} 
@@ -46,11 +46,13 @@ export default function(props) {
                         onClick={() => props.timeControl("stop", props.projectId, totalSeconds)}/>
                 </div> : 
                 <div className="btn-wrapper">
-                {!props.editable && <FontAwesomeIcon 
+                {!props.editable && 
+                <FontAwesomeIcon 
                     className = "btn-ctrl" 
                     icon={faPlay} 
                     onClick={() => props.timeControl("play", props.projectId, totalSeconds)}/>}
-                {!props.editable && <FontAwesomeIcon 
+                {!props.editable && 
+                <FontAwesomeIcon 
                     className = "btn-ctrl" 
                     icon={faTrashAlt} onClick={() => props.deleteProj(props.projectId)}/>}
                 <FontAwesomeIcon 

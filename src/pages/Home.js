@@ -2,11 +2,15 @@ import './Styles.css'
 import NewProject from '../components/NewProject'
 import Project from '../components/Project'
 import Loader from '../components/Loader'
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 
 export default function(props) {
 
     const [currentProject, setCurrentProject] = useState({});
+    const [projects, setProjects] = useState([]);
+    
+
+    
 
     // ADD NEW PROJECT
     let submitNewProjectHandler = (event) => {
@@ -32,17 +36,16 @@ export default function(props) {
         if (action == "play") {
             currentlyActive[0].status = "active";
             currentlyActive[0].isActive = true;
-            setCurrentProject({...currentlyActive[0]});
         } else {
             currentlyActive[0].status = "inactive";
             currentlyActive[0].isActive = false;
             currentlyActive[0].totalTime = time;
-            setCurrentProject({...currentlyActive[0]});
-            let duplicate = [...props.projectsDB];
-            let replaceIndex = props.projectsDB.findIndex(project => project.id == projectId);
-            duplicate.splice(replaceIndex, 1, currentlyActive[0]);
-            props.setProjectsDB([...duplicate]);
         }
+        setCurrentProject({...currentlyActive[0]});
+        let duplicate = [...props.projectsDB];
+        let replaceIndex = props.projectsDB.findIndex(project => project.id == projectId);
+        duplicate.splice(replaceIndex, 1, currentlyActive[0]);
+        props.setProjectsDB([...duplicate]);
     }
 
     // DELETE PROJECT
@@ -67,10 +70,10 @@ export default function(props) {
     }
 
     // PROJECTS COMPONENT
-    let ProjectGroup = () => {
-        let projects = props.projectsDB.map((project, index) => 
+    
+   useEffect(() => {
+        setProjects(props.projectsDB.map(project => 
             <Project 
-            key = {index}
             projectId = {project.id}  
             name = {project.projectName}
             description = {project.description} 
@@ -81,9 +84,10 @@ export default function(props) {
             deleteProj = {deleteProj}
             totalTime = {project.totalTime} 
             isActive = {project.isActive}
-            editable = {project.isEditable} />);
-        return (<div className="project-wrapper"> { projects } </div>);
-    }
+            editable = {project.isEditable} />
+        ))
+        console.log(projects)
+    }, [props.projectsDB]);
 
 
 
@@ -92,7 +96,7 @@ export default function(props) {
             <div>
             <h3>Welcome!</h3>
             {props.loader ? <Loader /> : null}
-            <div>{props.projectsDB.length !== 0 || props.loader ? <ProjectGroup />: "You have no projects yet."}</div>
+            <div>{/* props.projectsDB.length !== 0 || props.loader ? */ <div className="project-wrapper"> { projects } </div>/* : "You have no projects yet." */}</div>
             {props.showNewProject ? <NewProject projectHandler = {submitNewProjectHandler}/> : null}
             </div>
         </div>
