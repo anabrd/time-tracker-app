@@ -67,7 +67,8 @@ function App() {
 
   // Update server datapase on change in local db
   useEffect(() => {
-    ApiToGo.post(projectsDB).then(output => console.log(output));
+    let updatedDB = [...projectsDB]
+    ApiToGo.post(updatedDB).then(output => console.log(output));
   }, [projectsDB]);
 
 
@@ -76,7 +77,6 @@ function App() {
       localStorage.removeItem("api-to-go");
       setLoggedIn(false);
       setRegistered(false);
-      setProjectsDB([]);
   }
 
   return (
