@@ -9,9 +9,6 @@ export default function(props) {
     const [currentProject, setCurrentProject] = useState({});
     const [projects, setProjects] = useState([]);
     
-
-    
-
     // ADD NEW PROJECT
     let submitNewProjectHandler = (event) => {
         event.preventDefault();
@@ -71,7 +68,7 @@ export default function(props) {
 
     // PROJECTS COMPONENT
     
-   useEffect(() => {
+    useEffect(() => {
         setProjects(props.projectsDB.map(project => 
             <Project 
             projectId = {project.id}  
@@ -86,17 +83,14 @@ export default function(props) {
             isActive = {project.isActive}
             editable = {project.isEditable} />
         ))
-        console.log(projects)
     }, [props.projectsDB]);
-
-
 
     return (
         <div>
             <div>
             <h3>Welcome!</h3>
             {props.loader ? <Loader /> : null}
-            <div>{/* props.projectsDB.length !== 0 || props.loader ? */ <div className="project-wrapper"> { projects } </div>/* : "You have no projects yet." */}</div>
+            <div> {props.projectsDB.length !== 0 || props.loader ? <div className="project-wrapper"> { projects } </div>: "You have no projects yet."}</div>
             {props.showNewProject ? <NewProject projectHandler = {submitNewProjectHandler}/> : null}
             </div>
         </div>

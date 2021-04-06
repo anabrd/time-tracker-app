@@ -1,11 +1,10 @@
 // TODO:
 
 // PRIMARY
-// fix add array of components
-// Fix edit lack of update on first change
-// Fix first render of data upon login
-// Add username to database
-// set username in db
+// refactor database:
+//// - add user name
+//// - separate entry for each log
+//// - contain date information
 // add fallback for report with no data
 // update pie chart with dynamic data rendering
 // add relevant colors to pie chart
@@ -22,6 +21,7 @@ import Home from './pages/Home'
 import Reports from './pages/Reports'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import Navbar from './components/Navbar'
 import React from "react";
 import {useState, useEffect} from 'react';
 import {
@@ -43,7 +43,9 @@ function App() {
   const [projectsDB, setProjectsDB] = useState([]);
   const [showNewProject, setShowNewProject] = useState(false);
   const [token, setToken] = useState(localStorage.getItem("api-to-go"));
+  const [isHome, setisHome] = useState(true);
 
+  // Check if user is logged in based on token in localStorage
   useEffect(() => {
     if (localStorage.getItem("api-to-go") !== null) {
       setLoggedIn(true);
@@ -53,25 +55,23 @@ function App() {
     }
   }, []);
 
+  // Toggle loading while data is fetching
   useEffect(() => {
     setLoader(true);
-    console.log("get happens")
-    console.log("loader in useEffect", loader)
     ApiToGo.get().then(output => 
       {setProjectsDB(output[0]);
       setLoader(false);
       }).catch(error => console.log(error));
-    console.log("inside get", projectsDB)
     
   }, [token]);
 
-  console.log("loader out of useEffect", loader)
-
+  // Update server datapase on change in local db
   useEffect(() => {
     ApiToGo.post(projectsDB).then(output => console.log(output));
   }, [projectsDB]);
 
 
+  // Logut func
   let logout = () => {
       localStorage.removeItem("api-to-go");
       setLoggedIn(false);
@@ -82,20 +82,14 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <nav>
-            <h1><Link to="/">Time Tracker ⏱</Link></h1>
-            <ul>
-                <li>
-                  {loggedIn ?  <button className="btn btn-main" id = "nav-btn" onClick = {()=> showNewProject ? setShowNewProject(false) : setShowNewProject(true)}>New Project</button> : null}
-                </li>
-                <li>
-                  {loggedIn ?  <Link to="/reports">Reports</Link> : null}
-                </li>
-                <li>
-                  {loggedIn ?  <Link to="/" onClick = {logout}>Logout</Link> : null}
-                </li>
-            </ul>
-        </nav>
+        <Navbar 
+        loggedIn = {loggedIn}
+        showNewProject = {showNewProject}
+        logout = {logout}
+        setShowNewProject = {setShowNewProject}
+        isHome = {isHome}
+        setisHome = {setisHome}
+        />
         <main>
           <Switch>
               <Route path="/reports">
@@ -114,7 +108,7 @@ function App() {
                 setProjectsDB = {setProjectsDB}
                 showNewProject = {showNewProject} 
                 setShowNewProject = {setShowNewProject} /> : 
-                <Login 
+                <Login
                 setLoggedIn = {setLoggedIn} 
                 setToken = {setToken}
                 /> }

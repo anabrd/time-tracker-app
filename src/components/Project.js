@@ -12,13 +12,14 @@ export default function(props) {
     const [description, setDescription] = useState(props.description);
 
     useEffect(() => {
-    if (props.isActive) {
-        setTimeout(function() {setTotalSeconds(totalSeconds+1)}, 1000);
-        console.log("total seconds:", totalSeconds)
-        setTimeout(function() {setSeconds((seconds+1)%60)}, 1000);
-        setMinutes(Math.floor(totalSeconds/60)%60);
-        setHours(Math.floor(totalSeconds/3600));
-    }}, [seconds, props.isActive]);
+        let updateTime;
+        if (props.isActive) {
+            updateTime = setTimeout(() => {setTotalSeconds(totalSeconds+1); setSeconds((seconds+1)%60)}, 1000);
+            setMinutes(Math.floor(totalSeconds/60)%60);
+            setHours(Math.floor(totalSeconds/3600));
+        }
+        return () => clearTimeout(updateTime);
+    }, [seconds, props.isActive]);
 
 
     return(
