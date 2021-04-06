@@ -1,6 +1,7 @@
 // TODO:
 
 // PRIMARY
+// scroll to new proj comp onclick
 // refactor database:
 //// - add user name
 //// - separate entry for each log
@@ -8,7 +9,6 @@
 // add fallback for report with no data
 // update pie chart with dynamic data rendering
 // add relevant colors to pie chart
-// change navbar add proj button when not on dashboard
 
 // SECONDARY
 // Add search, filter function by tags or dates
@@ -28,11 +28,11 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   Redirect
 } from "react-router-dom";
 import './App.css';
 import ApiToGo from "api-to-go"
+import {useRef} from 'react';
 
 
 function App() {
@@ -77,6 +77,7 @@ function App() {
       localStorage.removeItem("api-to-go");
       setLoggedIn(false);
       setRegistered(false);
+      setProjectsDB([])
   }
 
   return (

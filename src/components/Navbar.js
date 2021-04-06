@@ -1,13 +1,10 @@
 import { NavLink, Link } from "react-router-dom";
-import { useState, useEffect } from "react";
 
 export default function (props) {
-
-
     return (
         <nav>
             <h1>
-                <Link to="/">Time Tracker ⏱</Link>
+                Time Tracker ⏱
             </h1>
             <ul>
                 <li>
