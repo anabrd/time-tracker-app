@@ -2,7 +2,6 @@
 
 // PRIMARY
 // scroll to new proj comp onclick
-// move navbar to home???
 // refactor database:
 //// - add user name
 //// - separate entry for each log
@@ -76,7 +75,7 @@ function App() {
       localStorage.removeItem("api-to-go");
       setLoggedIn(false);
       setRegistered(false);
-      setProjectsDB([])
+      setProjectsDB([]);
   }
 
   return (
