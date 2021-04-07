@@ -22,8 +22,8 @@ export default function(props) {
         <div className="card">
             <form onSubmit={logInHandler}>
                 <h3>Log In</h3>
-                <input type="email" placeholder="Enter email" autoComplete required/>
-                <input type="password" placeholder="Password" autoComplete required/>
+                <input type="email" placeholder="Enter email" autoComplete="on" required/>
+                <input type="password" placeholder="Password" autoComplete="on" required/>
                 <input type="submit" className="btn btn-main" value="Log In"/>
             </form>
             <p>New here? <Link to="/register">Register</Link></p>

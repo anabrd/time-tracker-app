@@ -57,12 +57,18 @@ function App() {
       { 
         if (typeof(output) == "string") {
           console.log(output);
+          setLoader(false)
         } else {
           setProjectsDB(output[0]);
           console.log(output[0])
+          setLoader(false)
       }
-      }).catch(error => console.log(error));
-      setLoader(false);
+      }).catch(error => {
+        console.log(error)
+        setLoader(false)
+      }
+        );
+      ;
   }, [token]);
 
   // Update server datapase on change in local db

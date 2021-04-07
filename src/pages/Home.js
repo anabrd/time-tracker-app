@@ -89,7 +89,7 @@ export default function(props) {
 
     // Toggle show new project comp
     let showNewProjectHandler = () => {
-        setShowNewProject(prevState => !prevState)
+        setShowNewProject(prevState => !prevState);
     }
 
     return (
@@ -97,7 +97,7 @@ export default function(props) {
             <div>
             <h3>Welcome!</h3>
             {props.loader ? <Loader /> : null}
-            {props.projectsDB.length !== 0 ? <div className="project-wrapper"> { projects } </div>: <p>You have no projects yet.</p>}
+            {props.projectsDB.length !== 0 || props.loader ? <div className="project-wrapper"> { projects } </div>: <p>You have no projects yet.</p>}
             {showNewProject ? <NewProject projectHandler = {submitNewProjectHandler}/> : <Link to="/home/#new-project-form"><NewProjectBtn showNewProjectHandler = {showNewProjectHandler}/></Link>}
             </div>
         </div>
