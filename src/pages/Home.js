@@ -22,10 +22,10 @@ export default function(props) {
         newProject.description = event.currentTarget.children[1].children[1].value;
         newProject.start = new Date().toLocaleString();
         newProject.status = "inactive";
-        newProject.startTime = null;
         newProject.totalTime = 0;
         newProject.isActive = false;
         newProject.isEditable = false;
+        newProject.logs = [];
         setShowNewProject(false);
         props.setProjectsDB([...props.projectsDB, newProject]);
     }
@@ -37,16 +37,28 @@ export default function(props) {
         if (action == "play") {
             currentlyActive[0].status = "active";
             currentlyActive[0].isActive = true;
+
+            let newLog = {
+                id: Date.now(),
+                startDate: new Date().toLocaleString()
+            }
+
+            currentlyActive[0].logs.push(newLog);
         } else {
             currentlyActive[0].status = "inactive";
             currentlyActive[0].isActive = false;
             currentlyActive[0].totalTime = time;
+            let endTime = Date.now();
+            let lastLog =  currentlyActive[0].logs[currentlyActive[0].logs.length-1];
+            lastLog.endDate = new Date().toLocaleString();
+            lastLog.logTime = Math.floor((endTime - lastLog.id)/1000);
         }
         setCurrentProject({...currentlyActive[0]});
         let duplicate = [...props.projectsDB];
         let replaceIndex = props.projectsDB.findIndex(project => project.id == projectId);
         duplicate.splice(replaceIndex, 1, currentlyActive[0]);
         props.setProjectsDB([...duplicate]);
+        console.log(props.projectsDB)
     }
 
     // DELETE PROJECT
@@ -97,7 +109,7 @@ export default function(props) {
             <div>
             <h3>Welcome!</h3>
             {props.loader ? <Loader /> : null}
-            {props.projectsDB.length !== 0 || props.loader ? <div className="project-wrapper"> { projects } </div>: <p>You have no projects yet.</p>}
+            {props.projectsDB   .length !== 0 || props.loader ? <div className="project-wrapper"> { projects } </div>: <p>You have no projects yet.</p>}
             {showNewProject ? <NewProject projectHandler = {submitNewProjectHandler}/> : <Link to="/home/#new-project-form"><NewProjectBtn showNewProjectHandler = {showNewProjectHandler}/></Link>}
             </div>
         </div>

@@ -1,9 +1,7 @@
 // TODO:
 
 // PRIMARY
-// deleting the array on logout without post
 // refactor database:
-//// - add user name
 //// - separate entry for each log
 //// - contain date information
 // add fallback for report with no data
@@ -71,7 +69,7 @@ function App() {
       ;
   }, [token]);
 
-  // Update server datapase on change in local db
+//  Update server datapase on change in local db
   useEffect(() => {
     if (loggedIn) {
     let updatedDB = [...projectsDB]

@@ -7,7 +7,6 @@ export default function(props) {
 
     let registerHandler = (e) => {
         e.preventDefault();
-        let username = e.currentTarget.children[1].value;
         let email = e.currentTarget.children[2].value;
         let pass = e.currentTarget.children[3].value;
         let passConf = e.currentTarget.children[4].value;
@@ -17,11 +16,11 @@ export default function(props) {
         } else {
             setNoMatch(false);
             ApiToGo.register(email,pass).then(output => 
-                { 
-                    if (output == "success"){
-                        props.setRegistered(true)
-                    }
-                });
+            { 
+                if (output == "success"){
+                    props.setRegistered(true)
+                }
+            });
         }
     }
 
@@ -29,7 +28,6 @@ export default function(props) {
         <div className="card">
             <form onSubmit = {registerHandler}>
                 <h3>Register</h3>
-                <input type="text" placeholder="Choose your username" required/>
                 <input type="email" placeholder="Enter Email" required/>
                 <input type="password" placeholder="Enter Password" required/>
                 <input type="password" placeholder="Confirm Password" required/>

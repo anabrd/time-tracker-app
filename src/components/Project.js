@@ -26,12 +26,14 @@ export default function(props) {
         <div style = {props.isActive ? {border: "2px solid green", transition: "0.2s"} : null} className="project">
             <h3 
             contentEditable = {props.editable ? true : false} 
+            suppressContentEditableWarning = {true}
             style = {props.editable ? {borderBottom: "2px solid #9C20B0", transition: "0.4s"}: null} 
             onInput = {(e) => setName(e.target.innerText)}>
                 {props.name}
             </h3>
             <p 
             contentEditable = {props.editable ? true : false} 
+            suppressContentEditableWarning = {true}
             style = {props.editable ? {borderBottom: "2px solid #9C20B0", transition: "0.4s"}: null}
             onInput = {(e) => setDescription(e.target.innerText)}>
                 {props.description}
