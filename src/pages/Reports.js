@@ -11,7 +11,6 @@ export default function(props) {
 
     const [rawData, setRawData] = useState(props.data);
 
-
     let pieData = {}
     
     pieData.labels = rawData.map(item => item.projectName);

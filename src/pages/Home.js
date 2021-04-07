@@ -1,5 +1,6 @@
 import './Styles.css'
 import NewProject from '../components/NewProject'
+import NewProjectBtn from '../components/NewProjectBtn'
 import Project from '../components/Project'
 import Loader from '../components/Loader'
 import {useState, useEffect} from 'react'
@@ -8,6 +9,7 @@ export default function(props) {
 
     const [currentProject, setCurrentProject] = useState({});
     const [projects, setProjects] = useState([]);
+    const [showNewProject, setShowNewProject] = useState(false);
     
     // ADD NEW PROJECT
     let submitNewProjectHandler = (event) => {
@@ -22,7 +24,7 @@ export default function(props) {
         newProject.totalTime = 0;
         newProject.isActive = false;
         newProject.isEditable = false;
-        props.setShowNewProject(false);
+        setShowNewProject(false);
         props.setProjectsDB([...props.projectsDB, newProject]);
     }
 
@@ -55,11 +57,9 @@ export default function(props) {
 
     let editProject = (e, status, projectId, name, description) => {
         let currentlyActive = props.projectsDB.filter(project => project.id == projectId);
-            currentlyActive[0].isEditable = status;
-            currentlyActive[0].projectName = name;
-            currentlyActive[0].description = description;
-            console.log(currentlyActive)
-            console.log(e)
+        currentlyActive[0].isEditable = status;
+        currentlyActive[0].projectName = name;
+        currentlyActive[0].description = description;
         let duplicate = [...props.projectsDB];
         let replaceIndex = props.projectsDB.findIndex(project => project.id == projectId);
         duplicate.splice(replaceIndex, 1, currentlyActive[0]);
@@ -85,13 +85,18 @@ export default function(props) {
         ))
     }, [props.projectsDB]);
 
+    // Toggle show new project comp
+    let showNewProjectHandler = () => {
+        setShowNewProject(prevState => !prevState)
+    }
+
     return (
         <div>
             <div>
             <h3>Welcome!</h3>
             {props.loader ? <Loader /> : null}
-            <div> {props.projectsDB.length !== 0 || props.loader ? <div className="project-wrapper"> { projects } </div>: "You have no projects yet."}</div>
-            {props.showNewProject ? <NewProject projectHandler = {submitNewProjectHandler}/> : null}
+            {props.projectsDB.length !== 0 || props.loader ? <div className="project-wrapper"> { projects } </div>: <p>You have no projects yet.</p>}
+            {showNewProject ? <NewProject projectHandler = {submitNewProjectHandler}/> : <NewProjectBtn showNewProjectHandler = {showNewProjectHandler}/>}
             </div>
         </div>
         )

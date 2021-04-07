@@ -2,6 +2,7 @@
 
 // PRIMARY
 // scroll to new proj comp onclick
+// move navbar to home???
 // refactor database:
 //// - add user name
 //// - separate entry for each log
@@ -13,7 +14,6 @@
 // SECONDARY
 // Add search, filter function by tags or dates
 // Same filter for project reports
-// Add and edit project
 // Design rehaul
 // Mobile design
 
@@ -32,8 +32,6 @@ import {
 } from "react-router-dom";
 import './App.css';
 import ApiToGo from "api-to-go"
-import {useRef} from 'react';
-
 
 function App() {
 
@@ -41,25 +39,24 @@ function App() {
   const [loader, setLoader] = useState(true);
   const [registered, setRegistered] = useState(false);
   const [projectsDB, setProjectsDB] = useState([]);
-  const [showNewProject, setShowNewProject] = useState(false);
   const [token, setToken] = useState(localStorage.getItem("api-to-go"));
-  const [isHome, setisHome] = useState(true);
 
   // Check if user is logged in based on token in localStorage
   useEffect(() => {
     if (localStorage.getItem("api-to-go") !== null) {
       setLoggedIn(true);
-      console.log("log in happens")
+      console.log("log in happens");
     } else {
       setLoggedIn(false);
     }
-  }, []);
+  }, [token]);
 
   // Toggle loading while data is fetching
   useEffect(() => {
     setLoader(true);
     ApiToGo.get().then(output => 
       {setProjectsDB(output[0]);
+      console.log(output[0])
       setLoader(false);
       }).catch(error => console.log(error));
     
@@ -67,9 +64,11 @@ function App() {
 
   // Update server datapase on change in local db
   useEffect(() => {
+    if (loggedIn) {
     let updatedDB = [...projectsDB]
-    ApiToGo.post(updatedDB).then(output => console.log(output));
-  }, [projectsDB]);
+    ApiToGo.post(updatedDB).then(output => console.log(output)).catch(error => console.log(error));
+    }
+  }, [projectsDB, loggedIn]);
 
 
   // Logut func
@@ -85,14 +84,11 @@ function App() {
       <div className="App">
         <Navbar 
         loggedIn = {loggedIn}
-        showNewProject = {showNewProject}
         logout = {logout}
-        setShowNewProject = {setShowNewProject}
-        isHome = {isHome}
-        setisHome = {setisHome}
         />
         <main>
           <Switch>
+
               <Route path="/reports">
                 <Reports data = {projectsDB} />
               </Route>
@@ -107,8 +103,7 @@ function App() {
                 loader = {loader}
                 projectsDB = {projectsDB}
                 setProjectsDB = {setProjectsDB}
-                showNewProject = {showNewProject} 
-                setShowNewProject = {setShowNewProject} /> : 
+                /> : 
                 <Login
                 setLoggedIn = {setLoggedIn} 
                 setToken = {setToken}
