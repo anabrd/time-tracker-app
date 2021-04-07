@@ -3,7 +3,7 @@ import NewProject from '../components/NewProject'
 import NewProjectBtn from '../components/NewProjectBtn'
 import Project from '../components/Project'
 import Loader from '../components/Loader'
-import {useState, useEffect, useRef} from 'react'
+import {useState, useEffect} from 'react'
 import { HashLink as Link } from 'react-router-hash-link';
 
 export default function(props) {
@@ -11,6 +11,7 @@ export default function(props) {
     const [currentProject, setCurrentProject] = useState({});
     const [projects, setProjects] = useState([]);
     const [showNewProject, setShowNewProject] = useState(false);
+
     
     // ADD NEW PROJECT
     let submitNewProjectHandler = (event) => {
@@ -96,7 +97,7 @@ export default function(props) {
             <div>
             <h3>Welcome!</h3>
             {props.loader ? <Loader /> : null}
-            {props.projectsDB.length !== 0 || props.loader ? <div className="project-wrapper"> { projects } </div>: <p>You have no projects yet.</p>}
+            {props.projectsDB.length !== 0 ? <div className="project-wrapper"> { projects } </div>: <p>You have no projects yet.</p>}
             {showNewProject ? <NewProject projectHandler = {submitNewProjectHandler}/> : <Link to="/home/#new-project-form"><NewProjectBtn showNewProjectHandler = {showNewProjectHandler}/></Link>}
             </div>
         </div>

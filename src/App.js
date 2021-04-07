@@ -1,7 +1,7 @@
 // TODO:
 
 // PRIMARY
-// scroll to new proj comp onclick
+// deleting the array on logout without post
 // refactor database:
 //// - add user name
 //// - separate entry for each log
@@ -53,12 +53,16 @@ function App() {
   // Toggle loading while data is fetching
   useEffect(() => {
     setLoader(true);
-    ApiToGo.get().then(output => 
-      {setProjectsDB(output[0]);
-      console.log(output[0])
-      setLoader(false);
+    ApiToGo.get().then(output =>
+      { 
+        if (typeof(output) == "string") {
+          console.log(output);
+        } else {
+          setProjectsDB(output[0]);
+          console.log(output[0])
+      }
       }).catch(error => console.log(error));
-    
+      setLoader(false);
   }, [token]);
 
   // Update server datapase on change in local db
@@ -67,13 +71,13 @@ function App() {
     let updatedDB = [...projectsDB]
     ApiToGo.post(updatedDB).then(output => console.log(output)).catch(error => console.log(error));
     }
-  }, [projectsDB, loggedIn]);
+  }, [projectsDB]);
 
 
   // Logut func
   let logout = () => {
-      localStorage.removeItem("api-to-go");
       setLoggedIn(false);
+      localStorage.removeItem("api-to-go");
       setRegistered(false);
       setProjectsDB([]);
   }
@@ -99,6 +103,7 @@ function App() {
               <Route path="/">
                 {loggedIn ?
                 <Home 
+                loggedIn = {loggedIn}
                 loader = {loader}
                 projectsDB = {projectsDB}
                 setProjectsDB = {setProjectsDB}
