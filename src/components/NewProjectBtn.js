@@ -6,7 +6,7 @@ const NewProjectBtn = (props) =>
             className="btn btn-main"
             onClick={props.showNewProjectHandler}
             >
-            +
+            New Project +
         </button>
     )
 }

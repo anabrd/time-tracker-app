@@ -1,16 +1,16 @@
 // TODO:
 
 // PRIMARY
-// refactor database:
-//// - separate entry for each log
-//// - contain date information
+// clean up reports
+// make sort functions for ths
+// update data and page info on timecriteria change
 // add fallback for report with no data
 // update pie chart with dynamic data rendering
 // add relevant colors to pie chart
+// fix render data on refresh
+// Same filter for project reports
 
 // SECONDARY
-// Add search, filter function by tags or dates
-// Same filter for project reports
 // Design rehaul
 // Mobile design
 

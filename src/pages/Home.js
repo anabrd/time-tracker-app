@@ -40,6 +40,7 @@ export default function(props) {
 
             let newLog = {
                 id: Date.now(),
+                name: currentlyActive[0].projectName,
                 startDate: new Date().toLocaleString()
             }
 
@@ -109,7 +110,7 @@ export default function(props) {
             <div>
             <h3>Welcome!</h3>
             {props.loader ? <Loader /> : null}
-            {props.projectsDB   .length !== 0 || props.loader ? <div className="project-wrapper"> { projects } </div>: <p>You have no projects yet.</p>}
+            {props.projectsDB.length !== 0 || props.loader ? <div className="project-wrapper"> { projects } </div>: <p>You have no projects yet.</p>}
             {showNewProject ? <NewProject projectHandler = {submitNewProjectHandler}/> : <Link to="/home/#new-project-form"><NewProjectBtn showNewProjectHandler = {showNewProjectHandler}/></Link>}
             </div>
         </div>
