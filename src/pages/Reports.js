@@ -57,7 +57,7 @@ export default function(props) {
                           className = "btn-sort" 
                           icon={faSortUp} />
               <FontAwesomeIcon 
-              style = {{height: "15px", width: "15px"}}
+                          style = {{height: "15px", width: "15px"}}
                           className = "btn-sort" 
                           icon={faSortDown} />
             </div>
@@ -149,9 +149,11 @@ export default function(props) {
         </div>
         <div>
           <p>See reports for past:</p>
-          <button>Week</button>
-          <button>Month</button>
-          <button>Year</button>
+          <div style = {{width: "50%", padding: "0", margin: "auto"}}className = "btn-wrapper">
+          <button className = "btn time-criteria-btn">Week</button>
+          <button className = "btn time-criteria-btn">Month</button>
+          <button className = "btn time-criteria-btn">Year</button>
+          </div>
         </div>
       </section>
     )

@@ -138,14 +138,13 @@ span {
 
 .project {
     width: 29vmin;
+    height: 400px;
     text-align: left;
     padding: 2.5%;
     margin: auto 2%;
-    border-radius: 5px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-
     background: #FFFFFF;
     box-shadow: 0px 11px 20px rgba(5, 16, 55, 0.1);
     border-radius: 6px;
@@ -198,31 +197,44 @@ span {
 }
 
 table {
+    font-size: 0.8em;
     padding: 20px;
     border-collapse: collapse;
-    background: #FFFFFF;
     box-shadow: 0px 11px 20px rgba(5, 16, 55, 0.1);
     border-radius: 6px;
 }
 
 table td {
     padding: 12px;
-    border: 1px solid grey;
 }
 
-table > tr:nth-of-type(odd) {
+table > tr:nth-of-type(even) {
     background-color: white;
 }
 
-table>tr:nth-of-type(even) {
-    background-color: white;
+table>tr:nth-of-type(odd) {
+    background-color: #efefef;
 }
 
 table th {
     width: 150px;
-    padding: 12px;
-    border: 1px solid grey;
+    padding: 8px 12px;
     background-color: #FFC839;
+}
+table th:first-of-type {
+border-top-left-radius: 10px;
+}
+
+table th:last-of-type {
+    border-top-right-radius: 10px;
+}
+
+table tr:last-of-type td:first-of-type {
+    border-bottom-left-radius: 10px;
+}
+
+table tr:last-of-type td:last-of-type {
+    border-bottom-right-radius: 10px;
 }
 
 .th-wrapper {
@@ -241,6 +253,11 @@ table th {
     width: 50px;
 }
 
+.btn-sort:hover {
+    color: #9C20B0;
+    cursor: pointer;
+}
+
 
 .doughnut-wrapper {
     position: relative;
@@ -249,4 +266,16 @@ table th {
 
 .doughnut-wrapper, .table-wrapper {
     width: 45%;
+}
+
+.time-criteria-btn {
+    border: none;
+        background: #FFFFFF;
+        border-radius: 6px;
+}
+
+.time-criteria-btn:hover {
+    transition: 0.2s;
+    background-color: #9C20B0;
+    color: white;
 }
