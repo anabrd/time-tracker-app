@@ -1,8 +1,7 @@
 import { Doughnut } from 'react-chartjs-2';
 import { defaults } from 'react-chartjs-2'
-import {useState} from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSortDown, faSortUp} from '@fortawesome/free-solid-svg-icons'
+import { useState, useEffect } from 'react';
+import Table from '../components/Table'
 
 
 defaults.global.defaultFontFamily = 'Montserrat';
@@ -10,94 +9,9 @@ defaults.global.defaultFontColor = '#1e2b2b';
 
 export default function(props) {
 
+    let pieOutput;
     const [rawData, setRawData] = useState(props.data);
     const [timeCriteria, setTimeCriteria] = useState("today");
-
-    let pieOutput;
-    let LogTable = () => { 
-      
-      let header = <tr>
-        <th>
-          <div className = "th-wrapper">
-            <p>Project name</p>
-            <div className = "sort-wrapper">
-              <FontAwesomeIcon 
-              style = {{height: "15px", width: "15px"}}
-                          className = "btn-sort" 
-                          icon={faSortUp} />
-              <FontAwesomeIcon 
-              style = {{height: "15px", width: "15px"}}
-                          className = "btn-sort" 
-                          icon={faSortDown} />
-            </div>
-          </div>
-
-        </th>
-        <th>
-          <div className = "th-wrapper">
-            <p>Log start</p>
-            <div className = "sort-wrapper">
-              <FontAwesomeIcon 
-              style = {{height: "15px", width: "15px"}}
-                          className = "btn-sort" 
-                          icon={faSortUp} />
-              <FontAwesomeIcon 
-              style = {{height: "15px", width: "15px"}}
-                          className = "btn-sort" 
-                          icon={faSortDown} />
-            </div>
-          </div>
-        </th>
-        <th>
-          <div className = "th-wrapper">
-            <p>Log end</p>
-            <div className = "sort-wrapper">
-              <FontAwesomeIcon 
-                          style = {{height: "15px", width: "15px"}}
-                          className = "btn-sort" 
-                          icon={faSortUp} />
-              <FontAwesomeIcon 
-                          style = {{height: "15px", width: "15px"}}
-                          className = "btn-sort" 
-                          icon={faSortDown} />
-            </div>
-          </div>
-        </th>
-        <th>
-          <div className = "th-wrapper">
-            <p>Time logged</p>
-            <div className = "sort-wrapper">
-              <FontAwesomeIcon 
-              style = {{height: "15px", width: "15px"}}
-                          className = "btn-sort" 
-                          icon={faSortUp} />
-              <FontAwesomeIcon 
-              style = {{height: "15px", width: "15px"}}
-                          className = "btn-sort" 
-                          icon={faSortDown} />
-            </div>
-          </div>
-        </th>
-      </tr>;
-
-      let cells = rawData.map(item => item.logs.map((log) => {
-        return (<tr>
-                <td>{log.name}</td>
-                <td>{log.startDate}</td>
-                <td>{log.endDate}</td>
-                <td>{log.logTime}</td>
-                </tr>)
-                })
-                );
-      
-      return (
-      <div className = "table-wrapper">
-        <p>Logs you made in this period:</p>
-      <table>
-      {header}
-      {cells}
-    </table>
-    </div>)}
 
     let pieData = {};
     pieData.labels = rawData.map(item => item.projectName);
@@ -107,9 +21,10 @@ export default function(props) {
     if (pieData.values[0] == 0 || pieData.values.length == 0)  {
       pieOutput = <p>Whoops, nothing to show here either! Here's an actual donut instead. 🍩</p>
     } else {
-      pieOutput = <div className = "doughnut-wraper">
+      pieOutput = 
+      <div className = "doughnut-wraper">
         <p>Time logged by project - hover the chart for more info:</p>
-      <Doughnut options={{ maintainAspectRatio: true }} data={{
+        <Doughnut options={{ maintainAspectRatio: true }} data={{
                       labels: pieData.labels,
                       datasets: [
                         {
@@ -141,15 +56,15 @@ export default function(props) {
     return(
       <section>
         <div className = "reports-info">
-          <h3>Here's the breakdown of your logs for <span>{timeCriteria}</span></h3>
+          <h3>Here's the breakdown of your logs for <span className = "time-criteria-heading">{timeCriteria}</span></h3>
         </div>
         <div className = "reports-wrapper">
-          <LogTable />
+          <Table data = {rawData} />
           {pieOutput}
         </div>
-        <div>
+        <div className="time-criteria-select">
           <p>See reports for past:</p>
-          <div style = {{width: "50%", padding: "0", margin: "auto"}}className = "btn-wrapper">
+          <div style = {{width: "650px", padding: "0", margin: "auto"}}className = "btn-wrapper">
           <button className = "btn time-criteria-btn">Week</button>
           <button className = "btn time-criteria-btn">Month</button>
           <button className = "btn time-criteria-btn">Year</button>
