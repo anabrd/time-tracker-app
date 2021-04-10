@@ -2,7 +2,8 @@
 
 // PRIMARY
 // clean up reports
-// make sort functions for ths
+// internationalize date format
+// why stuff gets lost on current page render
 // update data and page info on timecriteria change
 // add fallback for report with no data
 // update pie chart with dynamic data rendering

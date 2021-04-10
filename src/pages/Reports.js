@@ -1,8 +1,7 @@
 import { Doughnut } from 'react-chartjs-2';
 import { defaults } from 'react-chartjs-2'
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Table from '../components/Table'
-
 
 defaults.global.defaultFontFamily = 'Montserrat';
 defaults.global.defaultFontColor = '#1e2b2b';
@@ -64,7 +63,7 @@ export default function(props) {
         </div>
         <div className="time-criteria-select">
           <p>See reports for past:</p>
-          <div style = {{width: "650px", padding: "0", margin: "auto"}}className = "btn-wrapper">
+          <div style = {{width: "650px", padding: "0", margin: "auto"}} className = "btn-wrapper">
           <button className = "btn time-criteria-btn">Week</button>
           <button className = "btn time-criteria-btn">Month</button>
           <button className = "btn time-criteria-btn">Year</button>
