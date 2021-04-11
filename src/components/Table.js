@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons'
+import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
 
 const LogTable = (props) => { 
 
@@ -69,12 +69,12 @@ const LogTable = (props) => {
                     <FontAwesomeIcon 
                     style = {{height: "15px", width: "15px"}}
                     className = "btn-sort" 
-                    icon={faSortUp}
+                    icon={faCaretUp}
                     onClick = {() => dataSorter("name", "desc")} />
                     <FontAwesomeIcon 
                     style = {{height: "15px", width: "15px"}}
                     className = "btn-sort" 
-                    icon={faSortDown}
+                    icon={faCaretDown}
                     onClick = {() => dataSorter("name", "asc")} />
                 </div>
             </div>
@@ -86,12 +86,12 @@ const LogTable = (props) => {
                     <FontAwesomeIcon 
                     style = {{height: "15px", width: "15px"}}
                     className = "btn-sort" 
-                    icon={faSortUp} 
+                    icon={faCaretUp} 
                     onClick = {() => dataSorter("logOrder", "desc")}/>
                     <FontAwesomeIcon 
                     style = {{height: "15px", width: "15px"}}
                     className = "btn-sort" 
-                    icon={faSortDown} 
+                    icon={faCaretDown} 
                     onClick = {() => dataSorter("logOrder", "asc")}/>
                 </div>
             </div>
@@ -103,12 +103,12 @@ const LogTable = (props) => {
                     <FontAwesomeIcon 
                     style = {{height: "15px", width: "15px"}}
                     className = "btn-sort" 
-                    icon={faSortUp} 
+                    icon={faCaretUp} 
                     onClick = {() => dataSorter("logOrder", "desc")}/>
                     <FontAwesomeIcon 
                     style = {{height: "15px", width: "15px"}}
                     className = "btn-sort" 
-                    icon={faSortDown} 
+                    icon={faCaretDown} 
                     onClick = {() => dataSorter("logOrder", "asc")}/>
                 </div>
             </div>
@@ -120,12 +120,12 @@ const LogTable = (props) => {
                     <FontAwesomeIcon 
                     style = {{height: "15px", width: "15px"}}
                     className = "btn-sort" 
-                    icon={faSortUp} 
+                    icon={faCaretUp} 
                     onClick = {() => dataSorter("logTime", "desc")}/>
                     <FontAwesomeIcon 
                     style = {{height: "15px", width: "15px"}}
                     className = "btn-sort" 
-                    icon={faSortDown} 
+                    icon={faCaretDown} 
                     onClick = {() => dataSorter("logTime", "asc")}/>
                 </div>
             </div>

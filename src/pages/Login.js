@@ -26,7 +26,7 @@ export default function(props) {
                 <input type="password" placeholder="Password" autoComplete="on" required/>
                 <input type="submit" className="btn btn-main" value="Log In"/>
             </form>
-            <p>New here? <Link to="/register">Register</Link></p>
+            <p>New here? <Link className = "register-link" to="/register">Register</Link></p>
         </div>
     )
 }
