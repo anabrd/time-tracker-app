@@ -1,6 +1,7 @@
 // TODO:
 
 // PRIMARY
+// parse and format time from seconds function
 // clean up reports
 // internationalize date format
 // why stuff gets lost on current page render

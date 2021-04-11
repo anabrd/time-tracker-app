@@ -40,7 +40,10 @@ export default function(props) {
             </p>
             <p>Started: {props.start}</p>
             <p>Status: {props.status}</p>
-            <p>Total time: {hours}h {minutes}m {seconds}s</p>
+            <p>Total time:  
+            {hours < 10 ? "0" + hours : hours}:
+            {minutes < 10 ? "0" + minutes : minutes}:
+            {seconds < 10 ? "0" + seconds : seconds}</p>
             {props.isActive ?
                 <div className="btn-wrapper">
                     <FontAwesomeIcon 

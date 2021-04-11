@@ -64,9 +64,10 @@ export default function(props) {
         <div className="time-criteria-select">
           <p>See reports for past:</p>
           <div style = {{width: "650px", padding: "0", margin: "auto"}} className = "btn-wrapper">
+          <button className = "btn time-criteria-btn">Today</button>
+          <button className = "btn time-criteria-btn">Yesterday</button>
           <button className = "btn time-criteria-btn">Week</button>
-          <button className = "btn time-criteria-btn">Month</button>
-          <button className = "btn time-criteria-btn">Year</button>
+          <button className = "btn time-criteria-btn">All Time</button>
           </div>
         </div>
       </section>
