@@ -16,7 +16,6 @@ export default function(props) {
     pieData.labels = rawData.map(item => item.projectName);
     pieData.values = rawData.map(item => item.totalTime);
 
-
     if (pieData.values[0] == 0 || pieData.values.length == 0)  {
       pieOutput = <p>Whoops, nothing to show here either! Here's an actual donut instead. 🍩</p>
     } else {
@@ -64,9 +63,9 @@ export default function(props) {
         <div className="time-criteria-select">
           <p>See reports for past:</p>
           <div style = {{width: "650px", padding: "0", margin: "auto"}} className = "btn-wrapper">
-          <button className = "btn time-criteria-btn">Today</button>
-          <button className = "btn time-criteria-btn">Yesterday</button>
           <button className = "btn time-criteria-btn">Week</button>
+          <button className = "btn time-criteria-btn">Month</button>
+          <button className = "btn time-criteria-btn">Year</button>
           <button className = "btn time-criteria-btn">All Time</button>
           </div>
         </div>

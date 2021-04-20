@@ -43,7 +43,6 @@ const LogTable = (props) => {
                 return 1;
             }
         }
-
         
         return 0;
         

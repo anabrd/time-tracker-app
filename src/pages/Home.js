@@ -16,11 +16,16 @@ export default function(props) {
     // ADD NEW PROJECT
     let submitNewProjectHandler = (event) => {
         event.preventDefault();
+
+        // parsing date
+        let timestamp = new Date();
+        timestamp = new Intl.DateTimeFormat('en-GB', { dateStyle: 'short', timeStyle: 'short' }).format(timestamp);
+        
         let newProject = {};
         newProject.id = Date.now();
         newProject.projectName = event.currentTarget.children[1].children[0].value;
         newProject.description = event.currentTarget.children[1].children[1].value;
-        newProject.start = new Date().toLocaleString();
+        newProject.start = timestamp;
         newProject.status = "inactive";
         newProject.totalTime = 0;
         newProject.isActive = false;

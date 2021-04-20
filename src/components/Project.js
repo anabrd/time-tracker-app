@@ -41,7 +41,7 @@ export default function(props) {
             <p>Started: {props.start}</p>
             <p>Status: {props.status}</p>
             <p>Total time:  
-            {hours < 10 ? "0" + hours : hours}:
+            {hours < 10 ? " 0" + hours : hours}:
             {minutes < 10 ? "0" + minutes : minutes}:
             {seconds < 10 ? "0" + seconds : seconds}</p>
             {props.isActive ?
