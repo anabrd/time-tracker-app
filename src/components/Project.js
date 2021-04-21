@@ -10,6 +10,7 @@ export default function(props) {
     const [hours, setHours] = useState(Math.floor(props.totalTime/3600));
     const [name, setName] = useState(props.name);
     const [description, setDescription] = useState(props.description);
+    
 
     useEffect(() => {
         let updateTime;
@@ -38,7 +39,7 @@ export default function(props) {
                     color="textSecondary"
                     contentEditable = {props.editable ? true : false} 
                     suppressContentEditableWarning = {true}
-                    style = {props.editable ? {borderBottom: "2px solid #9C20B0", transition: "0.4s"}: null}
+                    style = {props.editable ? {borderBottom: "2px solid #9C20B0", transition: "0.2s"}: null}
                     onInput = {(e) => setDescription(e.target.innerText)}
                     >
                     {props.description}
@@ -53,7 +54,6 @@ export default function(props) {
                 {minutes < 10 ? "0" + minutes : minutes}:
                 {seconds < 10 ? "0" + seconds : seconds}</Typography>
             </CardContent>
-
             <CardActions>
                 <Box width="100%" display="flex" justifyContent="space-around">
                     {props.isActive ?
@@ -80,7 +80,7 @@ export default function(props) {
                         </>
                     }
                 </Box>
-                </CardActions>
-            </Card>
+            </CardActions>
+        </Card>
     )
 }
