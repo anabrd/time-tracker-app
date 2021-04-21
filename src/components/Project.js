@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlay, faStop, faTrashAlt, faPen, faCheckCircle } from '@fortawesome/free-solid-svg-icons'
+import Card from '@material-ui/core/Card';
 
 export default function(props) {
     
@@ -23,7 +24,7 @@ export default function(props) {
 
 
     return(
-        <div style = {props.isActive ? {border: "2px solid green", transition: "0.2s"} : null} className="project">
+        <Card style = {props.isActive ? {border: "2px solid green", transition: "0.2s"} : null}>
             <h3 
             contentEditable = {props.editable ? true : false} 
             suppressContentEditableWarning = {true}
@@ -66,6 +67,6 @@ export default function(props) {
                     className = {props.editable ? "btn-active" : "btn-ctrl"}
                     onClick = {props.editable ? (e) => props.editProject(e, false, props.projectId, name, description) : (e) => props.editProject(e, true, props.projectId, name, description)}/>
                 </div>}
-            </div>
+            </Card>
     )
 }

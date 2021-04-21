@@ -31,6 +31,7 @@ import {
 } from "react-router-dom";
 import './App.css';
 import ApiToGo from "api-to-go"
+import CSSBaseline from '@material-ui/core/CssBaseline'
 
 function App() {
 
@@ -90,6 +91,7 @@ function App() {
 
   return (
     <Router>
+      <CSSBaseline />
       <div className="App">
         <Navbar 
         loggedIn = {loggedIn}

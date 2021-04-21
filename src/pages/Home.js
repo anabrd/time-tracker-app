@@ -5,6 +5,7 @@ import Project from '../components/Project'
 import Loader from '../components/Loader'
 import {useState, useEffect} from 'react'
 import { HashLink as Link } from 'react-router-hash-link';
+import Grid from '@material-ui/core/Grid';
 
 export default function(props) {
 
@@ -20,7 +21,7 @@ export default function(props) {
         // parsing date
         let timestamp = new Date();
         timestamp = new Intl.DateTimeFormat('en-GB', { dateStyle: 'short', timeStyle: 'short' }).format(timestamp);
-        
+
         let newProject = {};
         newProject.id = Date.now();
         newProject.projectName = event.currentTarget.children[1].children[0].value;
@@ -38,6 +39,8 @@ export default function(props) {
     // TIME CONTROLLER
     let timeControl = (action, projectId, time) => {
         let currentlyActive = props.projectsDB.filter(project => project.id == projectId);
+        let logTimestamp = new Date();
+        logTimestamp = new Intl.DateTimeFormat('en-GB', { dateStyle: 'short', timeStyle: 'short' }).format(logTimestamp);
 
         if (action == "play") {
             currentlyActive[0].status = "active";
@@ -46,7 +49,7 @@ export default function(props) {
             let newLog = {
                 id: Date.now(),
                 name: currentlyActive[0].projectName,
-                startDate: new Date().toLocaleString()
+                startDate: logTimestamp
             }
 
             currentlyActive[0].logs.push(newLog);
@@ -56,9 +59,10 @@ export default function(props) {
             currentlyActive[0].totalTime = time;
             let endTime = Date.now();
             let lastLog =  currentlyActive[0].logs[currentlyActive[0].logs.length-1];
-            lastLog.endDate = new Date().toLocaleString();
+            lastLog.endDate = logTimestamp;
             lastLog.logTime = Math.floor((endTime - lastLog.id)/1000);
         }
+
         setCurrentProject({...currentlyActive[0]});
         let duplicate = [...props.projectsDB];
         let replaceIndex = props.projectsDB.findIndex(project => project.id == projectId);
@@ -90,18 +94,20 @@ export default function(props) {
     
     useEffect(() => {
         setProjects(props.projectsDB.map(project => 
-            <Project 
-            projectId = {project.id}  
-            name = {project.projectName}
-            description = {project.description} 
-            start = {project.start} 
-            status = {project.status} 
-            timeControl = {timeControl}
-            editProject = {editProject}
-            deleteProj = {deleteProj}
-            totalTime = {project.totalTime} 
-            isActive = {project.isActive}
-            editable = {project.isEditable} />
+            <Grid item xs={12} sm={6} md={4} lg={2}>
+                <Project 
+                projectId = {project.id}  
+                name = {project.projectName}
+                description = {project.description} 
+                start = {project.start} 
+                status = {project.status} 
+                timeControl = {timeControl}
+                editProject = {editProject}
+                deleteProj = {deleteProj}
+                totalTime = {project.totalTime} 
+                isActive = {project.isActive}
+                editable = {project.isEditable} />
+            </Grid>
         ))
     }, [props.projectsDB]);
 
@@ -112,12 +118,17 @@ export default function(props) {
 
     return (
         <div>
-            <div>
             <h3>Welcome!</h3>
             {props.loader ? <Loader /> : null}
-            {props.projectsDB.length !== 0 || props.loader ? <div className="project-wrapper"> { projects } </div>: <p>You have no projects yet.</p>}
-            {showNewProject ? <NewProject projectHandler = {submitNewProjectHandler}/> : <Link to="/home/#new-project-form"><NewProjectBtn showNewProjectHandler = {showNewProjectHandler}/></Link>}
-            </div>
+
+            {props.projectsDB.length !== 0 || props.loader ? 
+            <Grid container spacing={4}> { projects } </Grid> : <p>You have no projects yet.</p>}
+
+            {showNewProject ? 
+            <NewProject projectHandler = {submitNewProjectHandler}/> : 
+            <Link style={{ textDecoration: 'none' }} to="/home/#new-project-form">
+                <NewProjectBtn showNewProjectHandler = {showNewProjectHandler}/>
+            </Link>}
         </div>
         )
 }

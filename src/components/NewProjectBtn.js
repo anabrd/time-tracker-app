@@ -1,13 +1,16 @@
+import Button from '@material-ui/core/Button';
+
 const NewProjectBtn = (props) =>
 {
     return (
-        <button
-            id="new-proj-btn"
-            className="btn btn-main"
+        <Button 
+            variant="contained" 
+            color="primary"
             onClick={props.showNewProjectHandler}
             >
             New Project +
-        </button>
+        </Button>
     )
 }
+
 export default NewProjectBtn;
