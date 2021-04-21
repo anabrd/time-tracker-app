@@ -120,7 +120,11 @@ export default function(props) {
             {props.loader ? <Loader /> : null}
 
             {props.projectsDB.length !== 0 || props.loader ? 
-            <Grid container spacing={4}> { projects } </Grid> : <p>You have no projects yet.</p>}
+            <Grid container 
+            spacing={4}
+            alignItems="center"
+            justify="center"
+            > { projects } </Grid> : <p>You have no projects yet.</p>}
 
             {showNewProject ? 
             <NewProject 

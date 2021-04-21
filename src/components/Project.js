@@ -1,7 +1,6 @@
 import {useState, useEffect} from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlay, faStop, faTrashAlt, faPen, faCheckCircle } from '@fortawesome/free-solid-svg-icons'
-import Card from '@material-ui/core/Card';
+import { PlayArrowRounded, StopRounded, DeleteRounded, EditRounded, CheckCircleRounded } from '@material-ui/icons'
+import { Box, Card, CardActions, CardContent, Typography } from '@material-ui/core';
 
 export default function(props) {
     
@@ -25,48 +24,56 @@ export default function(props) {
 
     return(
         <Card style = {props.isActive ? {border: "2px solid green", transition: "0.2s"} : null}>
-            <h3 
-            contentEditable = {props.editable ? true : false} 
-            suppressContentEditableWarning = {true}
-            style = {props.editable ? {borderBottom: "2px solid #9C20B0", transition: "0.4s"}: null} 
-            onInput = {(e) => setName(e.target.innerText)}>
-                {props.name}
-            </h3>
-            <p 
-            contentEditable = {props.editable ? true : false} 
-            suppressContentEditableWarning = {true}
-            style = {props.editable ? {borderBottom: "2px solid #9C20B0", transition: "0.4s"}: null}
-            onInput = {(e) => setDescription(e.target.innerText)}>
-                {props.description}
-            </p>
-            <p>Started: {props.start}</p>
-            <p>Status: {props.status}</p>
-            <p>Total time:  
-            {hours < 10 ? " 0" + hours : hours}:
-            {minutes < 10 ? "0" + minutes : minutes}:
-            {seconds < 10 ? "0" + seconds : seconds}</p>
-            {props.isActive ?
-                <div className="btn-wrapper">
-                    <FontAwesomeIcon 
-                        className = "btn-active" 
-                        icon={faStop} 
-                        onClick={() => props.timeControl("stop", props.projectId, totalSeconds)}/>
-                </div> : 
-                <div className="btn-wrapper">
-                {!props.editable && 
-                <FontAwesomeIcon 
-                    className = "btn-ctrl" 
-                    icon={faPlay} 
-                    onClick={() => props.timeControl("play", props.projectId, totalSeconds)}/>}
-                {!props.editable && 
-                <FontAwesomeIcon 
-                    className = "btn-ctrl" 
-                    icon={faTrashAlt} onClick={() => props.deleteProj(props.projectId)}/>}
-                <FontAwesomeIcon 
-                    icon = {props.editable ? faCheckCircle : faPen} 
-                    className = {props.editable ? "btn-active" : "btn-ctrl"}
-                    onClick = {props.editable ? (e) => props.editProject(e, false, props.projectId, name, description) : (e) => props.editProject(e, true, props.projectId, name, description)}/>
-                </div>}
+            <CardContent>
+                <Typography
+                    variant="h5"
+                    contentEditable = {props.editable ? true : false} 
+                    suppressContentEditableWarning = {true}
+                    style = {props.editable ? {borderBottom: "2px solid #9C20B0", transition: "0.4s"}: null} 
+                    onInput = {(e) => setName(e.target.innerText)}>
+                    {props.name}
+                </Typography>
+                <Typography
+                    variant="p" 
+                    color="textSecondary"
+                    contentEditable = {props.editable ? true : false} 
+                    suppressContentEditableWarning = {true}
+                    style = {props.editable ? {borderBottom: "2px solid #9C20B0", transition: "0.4s"}: null}
+                    onInput = {(e) => setDescription(e.target.innerText)}
+                    >
+                    {props.description}
+                </Typography>
+                <Typography
+                    variant="body2" component="p">Started: {props.start}</Typography>
+                <Typography
+                    variant="body2" component="p">Status: {props.status}</Typography>
+                <Typography
+                    variant="p">Total time:  
+                {hours < 10 ? " 0" + hours : hours}:
+                {minutes < 10 ? "0" + minutes : minutes}:
+                {seconds < 10 ? "0" + seconds : seconds}</Typography>
+            </CardContent>
+
+            <CardActions>
+                {props.isActive ?
+                    <Box width="100%" display="flex" justifyContent="space-around">
+                        <StopRounded 
+                            onClick={() => props.timeControl("stop", props.projectId, totalSeconds)}/>
+                    </Box> : 
+                    <Box width="100%" display="flex" justifyContent="space-around">
+                    {props.editable ?
+                    <CheckCircleRounded
+                    onClick = {(e) => props.editProject(e, false, props.projectId, name, description)} />
+                    :
+                    <>
+                        <PlayArrowRounded onClick={() => props.timeControl("play", props.projectId, totalSeconds)}/>
+                        <DeleteRounded onClick={() => props.deleteProj(props.projectId)}/>
+                        <EditRounded onClick = {(e) => props.editProject(e, true, props.projectId, name, description)} />
+                    </>
+                    }
+                    </Box>
+                }
+                </CardActions>
             </Card>
     )
 }
