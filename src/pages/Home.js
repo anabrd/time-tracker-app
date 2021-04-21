@@ -1,4 +1,3 @@
-import './Styles.css'
 import NewProject from '../components/NewProject'
 import NewProjectBtn from '../components/NewProjectBtn'
 import Project from '../components/Project'
@@ -124,7 +123,10 @@ export default function(props) {
             <Grid container spacing={4}> { projects } </Grid> : <p>You have no projects yet.</p>}
 
             {showNewProject ? 
-            <NewProject projectHandler = {submitNewProjectHandler}/> : 
+            <NewProject 
+                projectHandler = {submitNewProjectHandler}
+                setShowNewProject = {setShowNewProject}
+            /> : 
             <Link style={{ textDecoration: 'none' }} to="/home/#new-project-form">
                 <NewProjectBtn showNewProjectHandler = {showNewProjectHandler}/>
             </Link>}

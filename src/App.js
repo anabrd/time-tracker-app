@@ -29,7 +29,6 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
-import './App.css';
 import ApiToGo from "api-to-go"
 import CSSBaseline from '@material-ui/core/CssBaseline'
 
