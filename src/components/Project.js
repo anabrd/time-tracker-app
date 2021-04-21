@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import { PlayArrowRounded, StopRounded, DeleteRounded, EditRounded, CheckCircleRounded } from '@material-ui/icons'
-import { Box, Card, CardActions, CardContent, Typography } from '@material-ui/core';
+import { Box, Card, CardActions, CardContent, Tooltip, Typography } from '@material-ui/core';
 
 export default function(props) {
     
@@ -55,24 +55,31 @@ export default function(props) {
             </CardContent>
 
             <CardActions>
-                {props.isActive ?
-                    <Box width="100%" display="flex" justifyContent="space-around">
-                        <StopRounded 
-                            onClick={() => props.timeControl("stop", props.projectId, totalSeconds)}/>
-                    </Box> : 
-                    <Box width="100%" display="flex" justifyContent="space-around">
-                    {props.editable ?
-                    <CheckCircleRounded
-                    onClick = {(e) => props.editProject(e, false, props.projectId, name, description)} />
-                    :
-                    <>
-                        <PlayArrowRounded onClick={() => props.timeControl("play", props.projectId, totalSeconds)}/>
-                        <DeleteRounded onClick={() => props.deleteProj(props.projectId)}/>
-                        <EditRounded onClick = {(e) => props.editProject(e, true, props.projectId, name, description)} />
-                    </>
+                <Box width="100%" display="flex" justifyContent="space-around">
+                    {props.isActive ?
+                        <Tooltip title="Stop">
+                            <StopRounded onClick={() => props.timeControl("stop", props.projectId, totalSeconds)}/>
+                        </Tooltip> : 
+                        props.editable ?
+                        <Tooltip title="Submit">
+                            <CheckCircleRounded onClick = {(e) => props.editProject(e, false, props.projectId, name, description)} />
+                        </Tooltip>
+                        :
+                        <>
+                            <Tooltip title="Start">
+                                <PlayArrowRounded onClick={() => props.timeControl("play", props.projectId, totalSeconds)}/>
+                            </Tooltip>
+
+                            <Tooltip title="Delete">
+                                <DeleteRounded onClick={() => props.deleteProj(props.projectId)}/>
+                            </Tooltip>
+
+                            <Tooltip title="Edit">
+                                <EditRounded onClick = {(e) => props.editProject(e, true, props.projectId, name, description)} />
+                            </Tooltip>
+                        </>
                     }
-                    </Box>
-                }
+                </Box>
                 </CardActions>
             </Card>
     )
