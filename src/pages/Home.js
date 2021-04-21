@@ -15,8 +15,7 @@ export default function(props) {
 
     
     // ADD NEW PROJECT
-    let submitNewProjectHandler = (event) => {
-        event.preventDefault();
+    let submitNewProjectHandler = (name, description) => {
 
         // parsing date
         let timestamp = new Date();
@@ -24,8 +23,8 @@ export default function(props) {
 
         let newProject = {};
         newProject.id = Date.now();
-        newProject.projectName = event.currentTarget.children[1].children[0].value;
-        newProject.description = event.currentTarget.children[1].children[1].value;
+        newProject.projectName = name;
+        newProject.description = description;
         newProject.start = timestamp;
         newProject.status = "inactive";
         newProject.totalTime = 0;
