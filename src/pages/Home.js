@@ -2,9 +2,9 @@ import NewProject from '../components/NewProject'
 import NewProjectBtn from '../components/NewProjectBtn'
 import Project from '../components/Project'
 import Loader from '../components/Loader'
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import { HashLink as Link } from 'react-router-hash-link';
-import Grid from '@material-ui/core/Grid';
+import { Grid, Typography } from '@material-ui/core';
 
 export default function(props) {
 
@@ -116,7 +116,7 @@ export default function(props) {
 
     return (
         <div>
-            <h3>Welcome!</h3>
+            <Typography variant="h4">Welcome!</Typography>
             {props.loader ? <Loader /> : null}
 
             {props.projectsDB.length !== 0 || props.loader ? 

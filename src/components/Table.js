@@ -1,24 +1,17 @@
 import { useState, useEffect } from 'react';
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel } from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
+import { ArrowDownwardRounded } from '@material-ui/icons'
+import timeParser from './TimeParser'
 
 const LogTable = (props) => { 
 
     const [rawData, setRawData] = useState(props.data);
+
     let logsArr = rawData.map(item => item.logs.map(log => log));
     logsArr = [].concat.apply([], logsArr);
     const [logsRender, setLogsRender] = useState(logsArr);
-
-    let timeParser = (total) => {
-        let hours   = Math.floor(total / 3600);
-        let minutes = Math.floor((total - (hours * 3600)) / 60);
-        let seconds = total - (hours * 3600) - (minutes * 60);
-
-        if (hours   < 10) {hours   = "0" + hours;}
-        if (minutes < 10) {minutes = "0" + minutes;}
-        if (seconds < 10) {seconds = "0" + seconds;}
-        return hours+':'+minutes+':'+seconds;
-    }
 
     let dataSorter = (param, order) => {
         console.log("in function")
@@ -69,6 +62,7 @@ const LogTable = (props) => {
     useEffect(() => {
     console.log(logsRender)
     }, [logsArr]);
+
 
     let header = 
     <tr>
@@ -141,21 +135,54 @@ const LogTable = (props) => {
             </div>
         </th>
         </tr>;
-
-        let cells = logsRender.map(log => <tr>
-                                        <td>{log.name}</td>
-                                        <td>{log.startDate}</td>
-                                        <td>{log.endDate}</td>
-                                        <td>{timeParser(log.logTime)}</td>
-                                        </tr>);
         
-    return (<div className = "table-wrapper">
-                <p>Logs you made in this period:</p>
-                <table>
-                    {header}
-                    {cells}
-                </table>
-            </div>)
+    return (<>
+            <p>Logs you made in this period:</p>
+            <TableContainer component={Paper}>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>
+                                Project name
+                                <TableSortLabel />
+                            </TableCell>
+                            <TableCell>
+                                Log Start
+                                <TableSortLabel />
+                            </TableCell>
+                            <TableCell>
+                                Log End
+                                <TableSortLabel />
+                            </TableCell>
+                            <TableCell>
+                                Time Logged
+                                <TableSortLabel 
+                                onClick = {() => dataSorter("logTime", "asc")}/>
+                            </TableCell>
+                        </TableRow>
+                    </TableHead>
+                        <TableBody>
+                            {logsRender.map((log, index) => (
+                                <TableRow key={index}>
+                                    <TableCell component="th" scope="row">
+                                        {log.name}
+                                    </TableCell>
+                                    <TableCell>
+                                        {log.startDate}
+                                    </TableCell>
+                                    <TableCell>
+                                        {log.endDate}
+                                    </TableCell>
+                                    <TableCell>
+                                        {timeParser(log.logTime)}
+                                    </TableCell>
+                                </TableRow>
+                            )
+                            )}
+                        </TableBody>
+                </Table>
+            </TableContainer>
+        </>)
 }
 
 export default LogTable;

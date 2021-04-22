@@ -1,9 +1,7 @@
 // TODO:
 
 // PRIMARY
-// parse and format time from seconds function
 // clean up reports
-// internationalize date format
 // why stuff gets lost on current page render
 // update data and page info on timecriteria change
 // add fallback for report with no data
@@ -96,7 +94,7 @@ function App() {
         loggedIn = {loggedIn}
         logout = {logout}
         />
-        <main>
+        <main style={{marginTop: "10%"}}>
           <Switch>
 
               <Route path="/reports">

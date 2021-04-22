@@ -8,8 +8,7 @@ body {
     color: #1e2b2b;
     background-color: #efefef;
     font-family: 'Lato',
-    sans-serif;
-
+        sans-serif;
 }
 
 main {
@@ -32,9 +31,11 @@ nav>ul>li {
     align-items: center;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     font-family: 'Montserrat',
-    sans-serif;
+        sans-serif;
 }
 
 h1 {
@@ -179,7 +180,7 @@ table td {
     padding: 12px;
 }
 
-table > tr:nth-of-type(even) {
+table>tr:nth-of-type(even) {
     background-color: white;
 }
 
@@ -192,8 +193,9 @@ table th {
     padding: 8px 12px;
     background-color: #d2d2d2;
 }
+
 table th:first-of-type {
-border-top-left-radius: 10px;
+    border-top-left-radius: 10px;
 }
 
 table th:last-of-type {
@@ -235,11 +237,11 @@ table tr:last-of-type td:last-of-type {
     flex: 1;
 }
 
-.doughnut-wrapper, .table-wrapper {
+.doughnut-wrapper,
+.table-wrapper {
     width: 45%;
     text-align: left;
 }
-
 
 .time-criteria-select {
     margin-top: 5%;
@@ -247,8 +249,8 @@ table tr:last-of-type td:last-of-type {
 
 .time-criteria-btn {
     border: none;
-        background: #FFFFFF;
-        border-radius: 6px;
+    background: #FFFFFF;
+    border-radius: 6px;
 }
 
 .time-criteria-btn:hover {
@@ -259,37 +261,37 @@ table tr:last-of-type td:last-of-type {
 
 .time-criteria-heading {
     text-decoration: none;
-        display: inline-block;
-        position: relative;
-        padding-bottom: 3px;
-   
+    display: inline-block;
+    position: relative;
+    padding-bottom: 3px;
+
 }
 
- .time-criteria-heading:after {
-     content: '';
-     display: block;
-     margin: auto;
-     height: 3px;
-     width: 0px;
-     background: #FFC839;
-     -webkit-animation-name: border;
-     /* Safari 4.0 - 8.0 */
-     -webkit-animation-duration: 0.5s;
-     /* Safari 4.0 - 8.0 */
-     -webkit-animation-fill-mode: forwards;
-     /* Safari 4.0 - 8.0 */
-     animation-name: border;
-     animation-duration: 0.5s;
-     animation-delay: 0.5s;
-     animation-fill-mode: forwards;
- }
+.time-criteria-heading:after {
+    content: '';
+    display: block;
+    margin: auto;
+    height: 3px;
+    width: 0px;
+    background: #FFC839;
+    -webkit-animation-name: border;
+    /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 0.5s;
+    /* Safari 4.0 - 8.0 */
+    -webkit-animation-fill-mode: forwards;
+    /* Safari 4.0 - 8.0 */
+    animation-name: border;
+    animation-duration: 0.5s;
+    animation-delay: 0.5s;
+    animation-fill-mode: forwards;
+}
 
-    @keyframes border {
-        from {
-            width: 0px;
-        }
-
-        to {
-            width: 100%
-        }
+@keyframes border {
+    from {
+        width: 0px;
     }
+
+    to {
+        width: 100%
+    }
+}
