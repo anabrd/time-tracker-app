@@ -22,7 +22,7 @@ nav {
     justify-items: center;
     justify-content: space-between;
     box-shadow: 0px 11px 20px rgba(5, 16, 55, 0.1);
-    background-color: white;
+    color: white;
 }
 
 nav>ul>li {
@@ -51,27 +51,12 @@ h1 a {
 }
 
 h1 a:hover {
-    color: rgb(30, 43, 43);
+    color: white;
 }
 
 a:visited {
-    color: rgb(30, 43, 43);
+    color: white;
 }
-
-.card {
-    display: block;
-    margin: 5% auto;
-    width: 70vmin;
-    padding: 1% 1.2%;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    background: #FFFFFF;
-    box-shadow: 0px 11px 20px rgba(5, 16, 55, 0.1);
-    border-radius: 6px;
-}
-
 
 p:focus {
     outline: none;
@@ -168,47 +153,6 @@ h3:focus {
     flex-wrap: wrap;
 }
 
-table {
-    font-size: 0.8em;
-    padding: 20px;
-    border-collapse: collapse;
-    box-shadow: 0px 11px 20px rgba(5, 16, 55, 0.1);
-    border-radius: 6px;
-}
-
-table td {
-    padding: 12px;
-}
-
-table>tr:nth-of-type(even) {
-    background-color: white;
-}
-
-table>tr:nth-of-type(odd) {
-    background-color: #efefef;
-}
-
-table th {
-    width: 150px;
-    padding: 8px 12px;
-    background-color: #d2d2d2;
-}
-
-table th:first-of-type {
-    border-top-left-radius: 10px;
-}
-
-table th:last-of-type {
-    border-top-right-radius: 10px;
-}
-
-table tr:last-of-type td:first-of-type {
-    border-bottom-left-radius: 10px;
-}
-
-table tr:last-of-type td:last-of-type {
-    border-bottom-right-radius: 10px;
-}
 
 .th-wrapper {
     display: flex;

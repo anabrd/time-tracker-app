@@ -1,13 +1,12 @@
 import {useState, useEffect} from 'react';
 import { PlayArrowRounded, StopRounded, DeleteRounded, EditRounded, CheckCircleRounded } from '@material-ui/icons'
 import { Box, Card, CardActions, CardContent, Tooltip, Typography } from '@material-ui/core';
+import TimeParser from './TimeParser'
 
 export default function(props) {
     
     const [seconds, setSeconds] = useState(parseInt(props.totalTime)%60);
     const [totalSeconds, setTotalSeconds] = useState(parseInt(props.totalTime));
-    const [minutes, setMinutes] = useState(Math.floor(props.totalTime/60)%60);
-    const [hours, setHours] = useState(Math.floor(props.totalTime/3600));
     const [name, setName] = useState(props.name);
     const [description, setDescription] = useState(props.description);
     
@@ -16,15 +15,13 @@ export default function(props) {
         let updateTime;
         if (props.isActive) {
             updateTime = setTimeout(() => {setTotalSeconds(totalSeconds+1); setSeconds((seconds+1)%60)}, 1000);
-            setMinutes(Math.floor(totalSeconds/60)%60);
-            setHours(Math.floor(totalSeconds/3600));
         }
         return () => clearTimeout(updateTime);
     }, [seconds, props.isActive]);
 
 
     return(
-        <Card style = {props.isActive ? {border: "2px solid green", transition: "0.2s"} : null}>
+        <Card style = {props.isActive ? {background: "linear-gradient(to right, #fbc7d4, #9796f0)", transition: "0.2s"} : null}>
             <CardContent>
                 <Typography
                     variant="h5"
@@ -49,10 +46,7 @@ export default function(props) {
                 <Typography
                     variant="body2" component="p">Status: {props.status}</Typography>
                 <Typography
-                    variant="p">Total time:  
-                {hours < 10 ? " 0" + hours : hours}:
-                {minutes < 10 ? "0" + minutes : minutes}:
-                {seconds < 10 ? "0" + seconds : seconds}</Typography>
+                    variant="p">Total time: {TimeParser(totalSeconds)}</Typography>
             </CardContent>
             <CardActions>
                 <Box width="100%" display="flex" justifyContent="space-around">

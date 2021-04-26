@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel } from '@material-ui/core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel } from '@material-ui/core';
 import timeParser from './TimeParser'
 
 const LogTable = (props) => { 
@@ -11,10 +9,9 @@ const LogTable = (props) => {
     logsArr = [].concat.apply([], logsArr);
     const [logsRender, setLogsRender] = useState(logsArr);
     const [order, setOrder] = useState("desc");
+    const [activeSort, setActiveSort] = useState(true);
 
     let dataSorter = (param, order) => {
-        console.log("in function")
-
         if (param == "name") {
             logsArr.sort(function (a,b) {
             var nameA = a.name.toUpperCase(); // ignore upper and lowercase
@@ -64,109 +61,36 @@ const LogTable = (props) => {
         setLogsRender([...logsArr])
     }
 
-    let headCells
-
     useEffect(() => {
     console.log(logsRender)
     }, [logsArr]);
-
-
-    let header = 
-    <tr>
-        <th>
-            <div className = "th-wrapper">
-                <p>Project name</p>
-                <div className = "sort-wrapper">
-                    <FontAwesomeIcon 
-                    style = {{height: "15px", width: "15px"}}
-                    className = "btn-sort" 
-                    icon={faCaretUp}
-                    onClick = {() => dataSorter("name", "desc")} />
-                    <FontAwesomeIcon 
-                    style = {{height: "15px", width: "15px"}}
-                    className = "btn-sort" 
-                    icon={faCaretDown}
-                    onClick = {() => dataSorter("name", "asc")} />
-                </div>
-            </div>
-        </th>
-        <th>
-            <div className = "th-wrapper">
-                <p>Log start</p>
-                <div className = "sort-wrapper">
-                    <FontAwesomeIcon 
-                    style = {{height: "15px", width: "15px"}}
-                    className = "btn-sort" 
-                    icon={faCaretUp} 
-                    onClick = {() => dataSorter("logOrder", "desc")}/>
-                    <FontAwesomeIcon 
-                    style = {{height: "15px", width: "15px"}}
-                    className = "btn-sort" 
-                    icon={faCaretDown} 
-                    onClick = {() => dataSorter("logOrder", "asc")}/>
-                </div>
-            </div>
-        </th>
-        <th>
-            <div className = "th-wrapper">
-                <p>Log end</p>
-                <div className = "sort-wrapper">
-                    <FontAwesomeIcon 
-                    style = {{height: "15px", width: "15px"}}
-                    className = "btn-sort" 
-                    icon={faCaretUp} 
-                    onClick = {() => dataSorter("logOrder", "desc")}/>
-                    <FontAwesomeIcon 
-                    style = {{height: "15px", width: "15px"}}
-                    className = "btn-sort" 
-                    icon={faCaretDown} 
-                    onClick = {() => dataSorter("logOrder", "asc")}/>
-                </div>
-            </div>
-        </th>
-        <th>
-            <div className = "th-wrapper">
-                <p>Time logged</p>
-                <div className = "sort-wrapper">
-                    <FontAwesomeIcon 
-                    style = {{height: "15px", width: "15px"}}
-                    className = "btn-sort" 
-                    icon={faCaretUp} 
-                    onClick = {() => dataSorter("logTime", "desc")}/>
-                    <FontAwesomeIcon 
-                    style = {{height: "15px", width: "15px"}}
-                    className = "btn-sort" 
-                    icon={faCaretDown} 
-                    onClick = {() => dataSorter("logTime", "asc")}/>
-                </div>
-            </div>
-        </th>
-        </tr>;
         
-    return (<>
-            <p>Logs you made in this period:</p>
-            <TableContainer component={Paper}>
+    return (<TableContainer component={Paper}>
                 <Table>
                     <TableHead>
                         <TableRow>
                             <TableCell>
                                 Project name
                                 <TableSortLabel 
+                                active = {activeSort}
                                 onClick = {() => dataSorter("name", order)}/>
                             </TableCell>
                             <TableCell>
                                 Log Start
                                 <TableSortLabel 
+                                active = {activeSort}
                                 onClick = {() => dataSorter("logOrder", order)}/>
                             </TableCell>
                             <TableCell>
                                 Log End
                                 <TableSortLabel 
+                                active = {activeSort}
                                 onClick = {() => dataSorter("logOrder", order)}/>
                             </TableCell>
                             <TableCell>
                                 Time Logged
                                 <TableSortLabel 
+                                active = {activeSort}
                                 onClick = {() => dataSorter("logTime", order)}/>
                             </TableCell>
                         </TableRow>
@@ -191,8 +115,7 @@ const LogTable = (props) => {
                             )}
                         </TableBody>
                 </Table>
-            </TableContainer>
-        </>)
+            </TableContainer>)
 }
 
 export default LogTable;

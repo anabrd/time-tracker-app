@@ -29,6 +29,7 @@ import {
 } from "react-router-dom";
 import ApiToGo from "api-to-go"
 import CSSBaseline from '@material-ui/core/CssBaseline'
+import './pages/Styles.css'
 
 function App() {
 
